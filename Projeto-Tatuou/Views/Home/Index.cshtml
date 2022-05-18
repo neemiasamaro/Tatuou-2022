@@ -1,0 +1,34 @@
+﻿@model IEnumerable<WebApplication1.Models.Estilos>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="first-section">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="title-text text-center" style="color:white;">
+                Tatuou
+            </h1>
+            <div class="search mx-auto">
+                <form class="form-inline" action="~/Home/Pesquisa" method="post">
+                    <input type="search" class="form-control" placeholder="Pesquisar..." />
+                    <button type="submit" class="btn-pesquisa"><i class="bi-search" style="color:#0d0d0d;"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h3 class="text-center">Alguns de nossos estilos...</h3>
+        <div class="mostrar-estilos">
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</section>

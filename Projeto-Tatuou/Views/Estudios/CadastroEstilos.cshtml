@@ -1,0 +1,48 @@
+﻿@model WebApplication1.Models.Estudio
+
+<input type="hidden" value="@Model.Id" id="estudioId"/>
+
+@foreach (var item in ViewBag.Estilos)
+{
+<div class="col-md-3">
+    @if (Model.EstudioEstilos.Where(p => p.EstilosId == item.Id).ToList().Count > 0)
+    {
+        <input type="checkbox" class="check" rel="@item.Id" checked="checked"/>
+    }
+    else
+    {
+        <input type="checkbox" class="check" rel="@item.Id" />
+    }
+
+    @item.Nome
+
+    <br />
+    @item.Descricao
+</div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        $(".check").click(function () {
+            var id = $(this).attr("rel");
+            var estudioId = $("#estudioId").val();
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "/Estudios/EditarEstilo",
+                data: { id, estudioId },
+                success: function (retorno) {
+                    if (retorno == "t") {
+                        $(this).attr('checked','checked');
+                    }
+                    else if (retorno == "f") {
+                        $(this).removeAttr('checked');
+                    }
+                }
+            });
+        });
+    </script>
+}

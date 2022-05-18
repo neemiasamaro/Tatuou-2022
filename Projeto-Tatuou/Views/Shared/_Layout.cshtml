@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatuou</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Water+Brush&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" />
+    @if (ViewBag.Title == "Index" || ViewBag.Title == "Estilos")
+    {
+        <link rel="stylesheet" href="~/Content/Index.css" />
+    }
+    else if (ViewBag.Title == "Cadastro" || ViewBag.Title == "Login")
+    {
+        <link rel="stylesheet" href="~/Content/Forms.css" />
+    }
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="@Url.Action("Index","Home")">Tatuou</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a href="@Url.Action("Estilos","Estilos")" class="nav-link">Estilos</a></li>
+                    <li class="nav-item"><a href="@Url.Action("Index","Estudios")" class="nav-link">Estudios</a></li>
+                </ul>
+                <ul class="navbar-nav text-right ml-auto">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Cadastro","Estudios")" class="nav-link">Cadastre seu Estúdio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Estudios/MeuPerfil/@User.Identity.Name.Split('|')[0]" class="nav-link">Meu Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Sair", "Home")" class="nav-link">@User.Identity.Name.Split('|')[1]- Sair</a>
+                            @*@Html.ActionLink(User.Identity.Name.Split('|')[1] + " - Sair", "Sair", "Home", new { @class = "nav-link" })*@
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Cadastro","Home")" class="nav-link">
+                                <span class="glyphicon glyphicon-user"></span> Cadastre-se
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Login","Home")" class="nav-link">
+                                <span class="glyphicon glyphicon-log-in"></span> Entrar
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <main class="container-fluid p-0">
+        @RenderBody()
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    @RenderSection("scripts", required: false)
+    <script src="https://cdn.tiny.cloud/1/no-apikey/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>tinymce.init({ selector: 'textarea' });</script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    @if (TempData["MSG"] != null)
+    {
+        <script>
+                $(document).ready(function () {
+                var titulo = "";
+                    switch ("@TempData["MSG"].ToString().Split('|')[0]") {
+                case "success":
+                    titulo = "Sucesso";
+                    break;
+                case "warning":
+                    titulo = "Atenção";
+                    break;
+                case "error":
+                    titulo = "Erro";
+                    break;
+                case "info":
+                    titulo = "Informação";
+                break;
+                }
+                swal(titulo, "@Html.Raw(TempData["MSG"].ToString().Split('|')[1])", "@TempData["MSG"].ToString().Split('|')[0]");
+                });
+        </script>
+    }
+    <script>
+        $(document).ready(function () {
+            $('.tabela').DataTable();
+        });
+    </script>
+    <script src="~/Scripts/pt-br.js"></script>
+</body>
+</html>

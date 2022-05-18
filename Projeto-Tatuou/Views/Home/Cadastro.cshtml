@@ -1,0 +1,73 @@
+﻿@model WebApplication1.Models.Cadastro
+
+@{
+    ViewBag.Title = "Cadastro";
+}
+
+<section class="form-cadastro-estudio">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h1 class="mb-5 text-center">Cadastro</h1>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Cpf, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.Cpf, new { htmlAttributes = new { @class = "form-control", @onmouseout = "javascript:replaceCPF(this)" } })
+                                        @Html.ValidationMessageFor(model => model.Cpf, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ConfirmaSenha, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.ConfirmaSenha, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ConfirmaSenha, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group text-center">
+                                        <input type="submit" value="Cadastrar-se" class="btn-submit" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function replaceCPF(cpf) {
+        return cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

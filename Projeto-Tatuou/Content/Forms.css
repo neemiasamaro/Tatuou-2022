@@ -1,0 +1,50 @@
+﻿*{
+    font-family:'Raleway', sans-serif;
+}
+
+
+.form-control{
+    border: none;
+    border-bottom: 1px solid #0d0d0d;
+    border-radius:0;
+    width: 30rem;
+}
+
+.form-cadastro-estudio, .form-login {
+    background: linear-gradient(rgba(82,85,98, 0.8), rgba(82,85,98, 0.8)), url(../images/bg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+label {
+    padding:0;
+    margin-bottom:0;
+    font-size: 1.25rem;
+}
+
+.card {
+    margin: 5rem 0;
+    padding: 2rem 3rem;
+    box-shadow: 0 10px 10px #0d0d0d;
+}
+
+.form-login > .container > .row > .col-md-12 > .card{
+    width: 30rem;
+}
+
+.btn-submit{
+    border: 2px solid #727586;
+    border-radius: 15px;
+    background-color:transparent;
+    padding: 5px 30px;
+    font-size:1.5rem;
+    color: #727586;
+    font-weight:bolder;
+    transition:all .25s ease-in-out;
+}
+
+.btn-submit:hover{
+    background-color:#727586;
+    color:white;
+}

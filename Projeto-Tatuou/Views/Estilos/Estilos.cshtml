@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebApplication1.Models.Estilos>
+
+@{
+    ViewBag.Title = "Estilos";
+}
+
+<section class="estilos">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center title-estilos pt-5 pb-5">Encontre seu Estilo...</h1>
+                <table class="table table-bordered tabela">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nome)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Descricao)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descricao)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
