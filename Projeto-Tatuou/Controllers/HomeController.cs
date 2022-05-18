@@ -81,13 +81,20 @@ namespace WebApplication1.Controllers
                     FormsAuthentication.SetAuthCookie(usu.Id + "|" + usu.Nome, true);
                     string permissoes = usu.Perfil.Descricao;
                     FormsAuthenticationTicket ticket = new
-                    FormsAuthenticationTicket(1, usu.Id + "|" + usu.Email,
+                    FormsAuthenticationTicket(1, usu.Id + "|" + usu.Email + "|" + usu.PerfilId,
                     DateTime.Now, DateTime.Now.AddMinutes(30), true, permissoes);
                     string hash = FormsAuthentication.Encrypt(ticket);
                     HttpCookie cookie = new
                     HttpCookie(FormsAuthentication.FormsCookieName, hash);
                     Response.Cookies.Add(cookie);
-                    return RedirectToAction("Cadastro", "Estudios");
+                    if (usu.Perfil.Descricao == "Admin")
+                    {
+                        return RedirectToAction("Estudios", "Estudios");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Cadastro", "Estudios");
+                    }
                 }
                 else
                 {

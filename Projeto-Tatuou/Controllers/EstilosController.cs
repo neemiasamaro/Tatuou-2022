@@ -117,7 +117,7 @@ namespace Projeto_Tatuou.Controllers
         // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Ativos")] Estilos estilos)
+        public ActionResult Edit([Bind(Include = "Id,Nome, Descricao,Ativos")] Estilos estilos)
         {
             if (ModelState.IsValid)
             {
