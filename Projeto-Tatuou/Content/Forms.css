@@ -2,12 +2,10 @@
     font-family:'Raleway', sans-serif;
 }
 
-
 .form-control{
     border: none;
     border-bottom: 1px solid #0d0d0d;
     border-radius:0;
-    width: 30rem;
 }
 
 .form-cadastro-estudio, .form-login {
@@ -15,21 +13,30 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size:cover;
+    height:100vh;
 }
 
 label {
-    padding:0;
-    margin-bottom:0;
+    padding: 0;
+    margin-bottom: 0;
     font-size: 1.25rem;
 }
 
 .card {
-    margin: 5rem 0;
-    padding: 2rem 3rem;
     box-shadow: 0 10px 10px #0d0d0d;
 }
 
-.form-login > .container > .row > .col-md-12 > .card{
+.card-cadastro {
+    margin: 3rem 0;
+    padding: 2rem 3rem;
+}
+
+.card-login {
+    margin: 5.2rem 0;
+    padding: 2rem 3rem;
+}
+
+.form-login > .container > .row > .col-md-12 > .card {
     width: 30rem;
 }
 

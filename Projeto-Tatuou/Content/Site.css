@@ -4,7 +4,10 @@
     vertical-align: baseline;
     list-style: none;
     border: 0;
-    overflow-x: hidden;
+}
+
+.navbar {
+    height:12vh;
 }
 
 .navbar, .collapse > ul > li > a {
