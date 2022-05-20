@@ -22,21 +22,17 @@
                                             <div class="col-md-2">
                                                 <img src="~/Uploads/@item.Id/@item.Foto?@DateTime.Now.ToString(" yyyyMMddHHmmss")" style="max-width:180px;" />
                                             </div>
-                                            <div class="col-md-10">
+                                            <div class="col-md-8">
                                                 <h3 class="pt-2 pb-2">@Html.DisplayFor(modelItem => item.nomeEstudio)</h3>
                                                 <hr />
                                                 <address>
-                                                    @Html.DisplayFor(modelItem => item.Logradouro),
-                                                    @Html.DisplayFor(modelItem => item.Numero),
-                                                    @Html.DisplayFor(modelItem => item.Complemento) -
+                                                    @Html.DisplayFor(modelItem => item.Cidade) - 
+                                                    @Html.DisplayFor(modelItem => item.Estado)
                                                 </address>
-                                                <address>
-                                                    @Html.DisplayFor(modelItem => item.Bairro).
-                                                    CEP: @Html.DisplayFor(modelItem => item.Cep).
-                                                    @Html.DisplayFor(modelItem => item.Cidade)/
-                                                    @Html.DisplayFor(modelItem => item.Estado).
-                                                </address>
-                                                <h3>@Html.DisplayFor(modelItem => item.EstudioEstilos)  </h3>
+                                                <h3>@Html.DisplayFor(modelItem => item.EstudioEstilos)</h3>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <a href="~/Estudios/Perfil/@Html.DisplayFor(modelItem => item.Id)">Ver Mais</a>
                                             </div>
                                         </div>
                                     </div>
