@@ -31,14 +31,16 @@
             </button>
             <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a href="@Url.Action("Estilos","Estilos")" class="nav-link">Estilos</a></li>
-                    <li class="nav-item"><a href="@Url.Action("Index","Estudios")" class="nav-link">Estudios</a></li>
-                </ul>
-                <ul class="navbar-nav text-right ml-auto">
                     @if (User.Identity.IsAuthenticated)
                     {
                         if (Convert.ToInt32(User.Identity.Name.Split('|')[2]) == 1)
                         {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Create","Estilos")" class="nav-link">Cadastrar Estilos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","Estilos")" class="nav-link">Lista de Estilos</a>
+                            </li>
                             <li class="nav-item">
                                 <a href="@Url.Action("Estudios","Estudios")" class="nav-link">Lista de Estúdios</a>
                             </li>
@@ -49,9 +51,22 @@
                                 <a href="@Url.Action("Cadastro","Estudios")" class="nav-link">Cadastre seu Estúdio</a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a href="~/Estudios/MeuPerfil/@User.Identity.Name.Split('|')[0]" class="nav-link">Meu Perfil</a>
-                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a href="@Url.Action("Estilos", "Estilos")" class="nav-link">Estilos</a></li>
+                        <li class="nav-item"><a href="@Url.Action("Index", "Estudios")" class="nav-link">Estudios</a></li>
+                    }
+                </ul>
+                <ul class="navbar-nav text-right ml-auto">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (Convert.ToInt32(User.Identity.Name.Split('|')[2]) == 2)
+                        {
+                            <li class="nav-item">
+                                <a href="~/Estudios/MeuPerfil/@User.Identity.Name.Split('|')[0]" class="nav-link">Meu Perfil</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a href="@Url.Action("Sair", "Home")" class="nav-link">@User.Identity.Name.Split('|')[1]- Sair</a>
                         </li>
