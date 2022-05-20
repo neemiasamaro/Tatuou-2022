@@ -15,9 +15,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            Estudio estudio = new Estudio();
-            var estudioEstilos = db.Estudio.Include(p => p.EstudioEstilos.Where(x => x.EstudioId == estudio.Id).ToList());
-            return View(estudioEstilos.ToList());
+            return View(db.Estudio.ToList());
         }
 
         [Authorize(Roles = "Admin")]
@@ -63,11 +61,12 @@ namespace WebApplication1.Controllers
             Estudio estudio = db.Estudio.Where(p => p.UsuarioId == id).ToList().FirstOrDefault();
             if (estudio == null)
             {
-                TempData["MSG"] = "error|Permissão negada para acessoa a esta página";
+                TempData["MSG"] = "error|Permissão negada para acesso a esta página";
                 return RedirectToAction("Index");
             }
             return View(estudio);
         }
+
         public ActionResult Perfil(int? id)
         {
             if (id == null)
