@@ -19,7 +19,8 @@ namespace WebApplication1.Migrations
         {
             context.Usuario.AddOrUpdate(
               p => p.Email,
-              new Models.Usuario { Id = 1, Nome = "Administrador", Email = "tatuouadmin@gmail.com", Senha = "V8SLtjr9Lz6lYIiywHSnaYNNwbbZ3l9lKJ8sPAomC8YyUeiO+0G4SWvLWhjHw9Z0cNwkeNT/wRuSmRs0ke874A==", Status = true, PerfilId = 1 });
+              new Models.Usuario { Id = 1, Nome = "Administrador", Email = "tatuouadmin@gmail.com", Senha = "V8SLtjr9Lz6lYIiywHSnaYNNwbbZ3l9lKJ8sPAomC8YyUeiO+0G4SWvLWhjHw9Z0cNwkeNT/wRuSmRs0ke874A==", Status = true, PerfilId = 1 },
+              new Models.Usuario { Id = 2, Nome = "Neemias", Email = "nemisilva10@gmail.com", Senha = "V8SLtjr9Lz6lYIiywHSnaYNNwbbZ3l9lKJ8sPAomC8YyUeiO+0G4SWvLWhjHw9Z0cNwkeNT/wRuSmRs0ke874A==", Status = true, PerfilId = 2 });
             context.Perfil.AddOrUpdate(
                 p => p.Descricao,
                 new Models.Perfil { Id = 1, Descricao = "Admin" },
@@ -35,6 +36,9 @@ namespace WebApplication1.Migrations
                 new Models.Estilos { Id = 7, Nome = "Tribal7", Descricao = "Teste", Ativos = true },
                 new Models.Estilos { Id = 8, Nome = "Tribal8", Descricao = "Teste", Ativos = true },
                 new Models.Estilos { Id = 9, Nome = "Tribal9", Descricao = "Teste", Ativos = true });
+            context.Estudio.AddOrUpdate(
+                p => p.nomeEstudio,
+                new Models.Estudio { Id = 1, nomeEstudio = "Teste", Cep = "12518250", Cidade = "Guaratinguetá", Logradouro = "Avenida Paulo Geraldo Pinto", Bairro = "Jardim Esperança", Cnpj = "11111111111111", Disponivel = true, Numero = "165", UsuarioId = 2 });
         }
     }
 }
