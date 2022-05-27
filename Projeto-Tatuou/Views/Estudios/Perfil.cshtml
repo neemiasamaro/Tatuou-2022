@@ -1,2 +1,121 @@
 ﻿@model WebApplication1.Models.Estudio
 
+<section id="page-artist">
+
+    <div class="wrapper">
+
+        <!-- ============ Main Header - START ============ -->
+
+        <header id="master-header">
+            <h2 id="page-title">@Html.DisplayFor(model => model.nomeEstudio)</h2>
+            <div class="header-meta artist-role">@Html.DisplayFor(model => model.Logradouro) @Html.DisplayFor(model => model.Numero), @Html.DisplayFor(model => model.Bairro) - @Html.DisplayFor(model => model.Cidade) ( @Html.DisplayFor(model => model.Estado) )</div> <br />
+            <a class="btn md btn-popup" href="#request"><i class="fa fa-thumb-tack"></i>Agendar um horário</a>
+        </header>
+
+        <!-- ============ Main Header - END ============ -->
+
+        <div id="main">
+            <!-- ============ Artist Description - START ============ -->
+
+            <div class="section">
+
+                <div class="content container">
+
+                    <div class="full row">
+
+                        <div class="col-md-6">
+
+                            <p>@Html.DisplayFor(model => model.Bio)</p>
+
+                            <h4>Minhas redes sociais!</h4>
+                            <ul class="social-links">
+                                <li><a title="Facebook" href="https://@Html.DisplayFor(model => model.Facebook)" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a title="Twitter" href="@Html.DisplayFor(model => model.Twitter)"><i class="fa fa-twitter"></i></a></li>
+                                <li><a title="Instagram" href="@Html.DisplayFor(model => model.Instagram)"><i class="fa fa-instagram"></i></a></li>
+                                <li><a title="LinkedIn" href="@Html.DisplayFor(model => model.Linkedin)"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+
+                            <h3 class="focus-title">Meus estilos</h3>
+                            <ul class="icon-list">
+                                <li><i class="fa fa-star"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+                                <li><i class="fa fa-star"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+                                <li><i class="fa fa-star"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+                            </ul>                       
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <img src="~/Uploads/@Html.DisplayFor(model => model.Id)/@Html.DisplayFor(model => model.Foto)?@DateTime.Now.ToString("yyyyMMddHHmmss")" />
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ============ Artist Description - END ============ -->
+            <!-- ============ Artist Works - START ============ -->
+
+            <div id="latest-works" class="section">
+
+                <div class="section-title">
+                    <h2>Portfólio</h2>
+                </div>
+
+                <div class="content container">
+
+                    <div class="works">
+
+                        <div class="work col-md-2 col-sm-6">
+
+                            <div class="work-thumb">
+                                <img src="" alt="Work 01">
+                                <div class="thumb-links">
+                                    <a class="zoom" href=""></a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="work col-md-2 col-sm-6">
+
+                            <div class="work-thumb">
+                                <img src="" alt="Work 01">
+                                <div class="thumb-links">
+                                    <a class="zoom" href=""></a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="work col-md-2 col-sm-6">
+
+                            <div class="work-thumb">
+                                <img src="" alt="Work 01">
+                                <div class="thumb-links">
+                                    <a class="zoom" href=""></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- ============ Instagram Banner - START ============ -->
+
+            <a class="instagram-bar" href="@Html.DisplayFor(model => model.Instagram)">Veja todos meus trabalhos no <strong>Instagram</strong>!</a>
+
+            <!-- ============ Instagram Banner - END ============ -->
+
+        </div>
+
+        <!-- ============ Footer - START ============ -->
+
+    </div>
+
+</section>

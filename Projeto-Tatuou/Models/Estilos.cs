@@ -18,7 +18,7 @@ namespace WebApplication1.Models
         [MaxLength(255)]
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
-        public Boolean Ativos { get; set; }
+        public Boolean Status { get; set; }
 
         public virtual ICollection<EstudioEstilo> EstudioEstilo { get; set; }
         [MaxLength(100)]

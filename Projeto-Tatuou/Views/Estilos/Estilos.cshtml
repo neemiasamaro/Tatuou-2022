@@ -3,38 +3,28 @@
 @{
     ViewBag.Title = "Estilos";
 }
+<section class="section cta dark">
+        <div class="content container">
+            <div class="works">
+                @foreach (var item in Model)
+                {
+                    <div class="work col-md-4 col-sm-6">
 
-<section class="estilos">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center title-estilos pt-5 pb-5">Encontre seu Estilo...</h1>
-                <table class="table table-bordered tabela">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Nome)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Descricao)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Nome)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Descricao)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                        <div class="work-thumb">
+
+                            <img src="@Html.DisplayFor(modelItem => item.Foto)" ; alt="@Html.DisplayFor(modelItem => item.Nome)">
+                            <div class="thumb-links">
+                                <a class="zoom" href="@Html.DisplayFor(modelItem => item.Foto)"></a>
+                            </div>
+                            <h6>@Html.DisplayFor(modelItem => item.Descricao)</h6>
+                        </div>
+
+                    </div>
+                }
             </div>
+
         </div>
-    </div>
 </section>
+
+
+

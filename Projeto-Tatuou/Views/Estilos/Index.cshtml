@@ -4,36 +4,61 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ativos)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ativos)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+<section class="section cta dark">
+    <div class="container-fluid" style="margin-top: 5rem;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card px-5 py-5">
+                    <h4 class="display-4"><strong>Listagem de Estilos</strong></h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="20%">
+                                    Nome
+                                </th>
+                                <th width="50%">
+                                    Descrição
+                                </th>
+                                <th width="15%">
+                                    Disponível
+                                </th>
+                                <th width="15%">
+                                    Ações
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Descricao)
+                                    </td>
+                                    <td>
+                                        @if (item.Status == false)
+                                        {
+                                            ViewBag.Disponivel = "Não";
+                                        }
+                                        else
+                                        {
+                                            ViewBag.Disponivel = "Sim";
+                                        }
+                                        @ViewBag.Disponivel
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("Edit", "Estilos", new { id = item.Id })"><i class="bi bi-pencil-square" style="font-size: 2em !important; color: black !important;"></i></a>
+                                        <a href="@Url.Action("Details", "Estilos", new { id = item.Id })"><i class="bi bi-info-square" style="font-size: 2em !important; color: black !important;"></i></a>
+                                        <a href="@Url.Action("Delete", "Estilos", new { id = item.Id })"><i class="bi bi-trash" style="font-size: 2em !important; color: black !important;"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

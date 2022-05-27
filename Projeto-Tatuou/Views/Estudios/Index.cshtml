@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<WebApplication1.Models.Estudio>
 
-<section>
-    <div class="container">
+
+<section class="section cta dark">
+    <div class="container" style="margin: 5rem auto 25rem auto;">
         <div class="row">
             <div class="col-md-12">
-                <table class="tabela">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>
-
                             </th>
                         </tr>
                     </thead>
@@ -17,27 +17,16 @@
                             <td>
                                 @foreach (var item in Model)
                                 {
-                                    <div class="card pl-3 pr-3 mt-4 mb-4">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <img src="~/Uploads/@item.Id/@item.Foto?@DateTime.Now.ToString(" yyyyMMddHHmmss")" style="max-width:180px;" />
-                                            </div>
-                                            <div class="col-md-10">
-                                                <h3 class="pt-2 pb-2">@Html.DisplayFor(modelItem => item.nomeEstudio)</h3>
-                                                <hr />
-                                                <address>
-                                                    @Html.DisplayFor(modelItem => item.Logradouro),
-                                                    @Html.DisplayFor(modelItem => item.Numero),
-                                                    @Html.DisplayFor(modelItem => item.Complemento) -
-                                                </address>
-                                                <address>
-                                                    @Html.DisplayFor(modelItem => item.Bairro).
-                                                    CEP: @Html.DisplayFor(modelItem => item.Cep).
-                                                    @Html.DisplayFor(modelItem => item.Cidade)/
-                                                    @Html.DisplayFor(modelItem => item.Estado).
-                                                </address>
-                                                <h3>@Html.DisplayFor(modelItem => item.EstudioEstilos)  </h3>
-                                            </div>
+                                    <div class="card col-md-4 mx-3 my-5" style="width: 20rem; height: 25rem;">
+                                        <img src="~/Uploads/@item.Id/@item.Foto?@DateTime.Now.ToString("yyyyMMddHHmmss")" class="card-img-top perfil-foto" alt="...">
+                                        <div class="card-body" style="color:black">
+                                            <p class="card-title"><b>@Html.DisplayFor(modelItem => item.nomeEstudio)</b></p>
+                                            <p class="card-text" style="color:black">
+                                                @Html.DisplayFor(modelItem => item.Cidade) -
+                                                @Html.DisplayFor(modelItem => item.Estado)
+                                            </p>
+                                            <h3>@Html.DisplayFor(modelItem => item.EstudioEstilos)</h3>
+                                            <a href="~/Estudios/Perfil/@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary">Visitar Perfil</a>
                                         </div>
                                     </div>
                                 }
@@ -49,3 +38,4 @@
         </div>
     </div>
 </section>
+

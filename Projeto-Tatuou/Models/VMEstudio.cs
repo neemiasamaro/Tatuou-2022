@@ -40,7 +40,13 @@ namespace WebApplication1.Models
 
         public string Instagram { get; set; }
 
-        public string Site { get; set; }
+        public string Twitter { get; set; }
+
+        public string Linkedin { get; set; }
+
+        [Required]
+        [StringLength(1000)]
+        public string Bio { get; set; }
 
         [Required]
         public string Cnpj { get; set; }

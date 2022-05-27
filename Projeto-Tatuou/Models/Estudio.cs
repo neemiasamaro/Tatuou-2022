@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -30,6 +31,7 @@ namespace WebApplication1.Models
         public string Cnpj { get; set; }
 
         public string Bairro { get; set; }
+
         public string Logradouro { get; set; }
 
         public string Complemento { get; set; }
@@ -45,10 +47,13 @@ namespace WebApplication1.Models
 
         public string Facebook { get; set; }
 
-
         public string Instagram { get; set; }
 
-        public string Site { get; set; }
+        public string Linkedin { get; set; }
+
+        public string Twitter { get; set; }
+
+        public string Bio { get; set; }
 
         public Boolean Disponivel { get; set; }
 

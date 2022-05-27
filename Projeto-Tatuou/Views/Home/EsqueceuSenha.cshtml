@@ -4,36 +4,35 @@
     ViewBag.Title = "EsqueceuSenha";
 }
 
-<h2>EsqueceuSenha</h2>
+<section class="section cta dark" style="height: 100vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3" style="top:25vh;">
+                @using (Html.BeginForm())
+                {
+                    <h3 class="display-3"><strong>Recuperar Senha</strong></h3>
+                    <p style="font-size: 1.5rem;">
+                        Se você não lembra sua senha, digite seu e-mail e enviaremos detalhes de como recuperá-la
+                    </p>
+                    @Html.AntiForgeryToken()
 
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-outline">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control",@placeholder = "Email" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>EsqueceuSenha</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        <input type="submit" value="Enviar" class="btn btn-block" />
+                    </div>
+                }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -6,10 +6,6 @@
     border: 0;
 }
 
-.navbar {
-    height:12vh;
-}
-
 .navbar, .collapse > ul > li > a {
     font-family: 'Raleway', sans-serif;
     background-color: #0d0d0d;

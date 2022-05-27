@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('.tabela').DataTable({
+    $('.table').DataTable({
         language: {
             "emptyTable": "Nenhum registro encontrado",
             "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",

@@ -15,9 +15,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            Estudio estudio = new Estudio();
-            var estudioEstilos = db.Estudio.Include(p => p.EstudioEstilos.Where(x => x.EstudioId == estudio.Id).ToList());
-            return View(estudioEstilos.ToList());
+            return View(db.Estudio.ToList());
         }
 
         [Authorize(Roles = "Admin")]
@@ -25,6 +23,7 @@ namespace WebApplication1.Controllers
         {
             return View(db.Estudio.ToList());
         }
+
         [Authorize(Roles = "Admin")]
         public ActionResult EditarEstudios(int? id)
         {
@@ -63,11 +62,12 @@ namespace WebApplication1.Controllers
             Estudio estudio = db.Estudio.Where(p => p.UsuarioId == id).ToList().FirstOrDefault();
             if (estudio == null)
             {
-                TempData["MSG"] = "error|Permissão negada para acessoa a esta página";
+                TempData["MSG"] = "error|Permissão negada para acesso a esta página";
                 return RedirectToAction("Index");
             }
             return View(estudio);
         }
+
         public ActionResult Perfil(int? id)
         {
             if (id == null)
@@ -125,7 +125,9 @@ namespace WebApplication1.Controllers
                 estudio.Instagram = cad.Instagram;
                 estudio.Logradouro = cad.Logradouro;
                 estudio.Numero = cad.Numero;
-                estudio.Site = cad.Site;
+                estudio.Twitter = cad.Twitter;
+                estudio.Linkedin = cad.Linkedin;
+                estudio.Bio = cad.Bio;
                 string cod_usu = User.Identity.Name.Split('|')[0];
                 estudio.Usuario = db.Usuario.Find(Convert.ToInt32(cod_usu));
                 estudio.Disponivel = false;
@@ -186,7 +188,7 @@ namespace WebApplication1.Controllers
                 Estudio estudio = db.Estudio.Find(id);
                 if (estudio != null)
                 {
-                    ViewBag.Estilos = db.Estilos.Where(p => p.Ativos == true).ToList();
+                    ViewBag.Estilos = db.Estilos.Where(p => p.Status == true).ToList();
                     return View(estudio);
                 }
             }

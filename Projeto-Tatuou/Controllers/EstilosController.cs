@@ -25,7 +25,7 @@ namespace Projeto_Tatuou.Controllers
         [AllowAnonymous]
         public ActionResult Estilos()
         {
-            return View(db.Estilos.ToList());
+            return View(db.Estilos.Where(p => p.Status == true).ToList());
         }
         // GET: Estilos/Details/5
         [Authorize(Roles = "Admin")]
@@ -55,7 +55,7 @@ namespace Projeto_Tatuou.Controllers
         // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,Descricao,Ativos")] Estilos estilos, HttpPostedFileBase arquivo)
+        public ActionResult Create([Bind(Include = "Id,Nome,Descricao,Status")] Estilos estilos, HttpPostedFileBase arquivo)
         {
             string valor = "";
             if (ModelState.IsValid)
@@ -117,7 +117,7 @@ namespace Projeto_Tatuou.Controllers
         // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome, Descricao,Ativos")] Estilos estilos)
+        public ActionResult Edit([Bind(Include = "Id,Nome, Descricao,Status")] Estilos estilos)
         {
             if (ModelState.IsValid)
             {
