@@ -2,7 +2,7 @@
 
 
 <section class="section cta dark">
-    <div class="container" style="margin: 5rem auto 25rem auto;">
+    <div class="container bg-white" style="margin: 5rem auto 25rem auto;">
         <div class="row">
             <div class="col-md-12">
                 <table class="table">
@@ -17,16 +17,22 @@
                             <td>
                                 @foreach (var item in Model)
                                 {
-                                    <div class="card col-md-4 mx-3 my-5" style="width: 20rem; height: 25rem;">
-                                        <img src="~/Uploads/@item.Id/@item.Foto?@DateTime.Now.ToString("yyyyMMddHHmmss")" class="card-img-top perfil-foto" alt="...">
-                                        <div class="card-body" style="color:black">
-                                            <p class="card-title"><b>@Html.DisplayFor(modelItem => item.nomeEstudio)</b></p>
-                                            <p class="card-text" style="color:black">
-                                                @Html.DisplayFor(modelItem => item.Cidade) -
-                                                @Html.DisplayFor(modelItem => item.Estado)
-                                            </p>
-                                            <h3>@Html.DisplayFor(modelItem => item.EstudioEstilos)</h3>
-                                            <a href="~/Estudios/Perfil/@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary">Visitar Perfil</a>
+                                    <div class="perfil-estudio">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <img src="~/Uploads/@item.Id/@item.Foto?@DateTime.Now.ToString("yyyyMMddHHmmss")" class="perfil-foto" alt="...">
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="card-title"><b>@Html.DisplayFor(modelItem => item.nomeEstudio)</b></p>
+                                                <p class="card-text" style="color:black">
+                                                    @Html.DisplayFor(modelItem => item.Cidade) -
+                                                    @Html.DisplayFor(modelItem => item.Estado)
+                                                </p>
+                                                <h3>@Html.DisplayFor(modelItem => item.EstudioEstilos)</h3>
+                                            </div>
+                                            <div class="col-3">
+                                                <a href="~/Estudios/Perfil/@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary">Visitar Perfil</a>
+                                            </div>
                                         </div>
                                     </div>
                                 }

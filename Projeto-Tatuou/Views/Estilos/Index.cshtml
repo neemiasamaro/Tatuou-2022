@@ -5,11 +5,11 @@
 }
 
 <section class="section cta dark">
-    <div class="container-fluid" style="margin-top: 5rem;">
+    <div class="container" style="margin-top: 5rem;">
         <div class="row">
             <div class="col-12">
-                <div class="card px-5 py-5">
-                    <h4 class="display-4"><strong>Listagem de Estilos</strong></h4>
+                <div class="card py-5">
+                    <h4 class="display-4" style="color:black;">Listagem de Estilos</h4>
                     <table class="table">
                         <thead>
                             <tr>
@@ -49,9 +49,9 @@
                                         @ViewBag.Disponivel
                                     </td>
                                     <td class="text-center">
-                                        <a href="@Url.Action("Edit", "Estilos", new { id = item.Id })"><i class="bi bi-pencil-square" style="font-size: 2em !important; color: black !important;"></i></a>
-                                        <a href="@Url.Action("Details", "Estilos", new { id = item.Id })"><i class="bi bi-info-square" style="font-size: 2em !important; color: black !important;"></i></a>
-                                        <a href="@Url.Action("Delete", "Estilos", new { id = item.Id })"><i class="bi bi-trash" style="font-size: 2em !important; color: black !important;"></i></a>
+                                        <a href="@Url.Action("Edit", "Estilos", new { id = item.Id })"><i class="bi bi-pencil-square" style="font-size: 1.5em !important; color: black !important;"></i></a>
+                                        <a href="@Url.Action("Details", "Estilos", new { id = item.Id })"><i class="bi bi-info-square" style="font-size: 1.5em !important; color: black !important;"></i></a>
+                                        <a href="@Url.Action("Delete", "Estilos", new { id = item.Id })"><i class="bi bi-trash" style="font-size: 1.5em !important; color: black !important;"></i></a>
                                     </td>
                                 </tr>
                             }

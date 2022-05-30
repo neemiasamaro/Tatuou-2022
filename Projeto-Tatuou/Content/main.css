@@ -7,6 +7,16 @@
 * Author URI: http://themeforest.net/user/webisir
 */
 
+::-webkit-scrollbar{
+    width: 10px;
+}
+
+::-webkit-scrollbar-track{
+    background: white;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #202020;
+}
 /*--------------------------------------------------------------
     TABLE OF CONTENTS:
 ----------------------------------------------------------------
@@ -986,8 +996,7 @@ h6 i {
 
         .instagram-bar:after,
         .instagram-bar strong:before {
-            font-family: FontAwesome;
-            content: '\f16d';
+            content: '\f437';
         }
 
     .instagram-bar:after {
@@ -3701,6 +3710,6 @@ textarea {
 }
 
 th, td {
+    font-size:large;
     text-align: left;
-    border: 0.5px solid black !important;
 }

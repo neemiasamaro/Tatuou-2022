@@ -4,38 +4,29 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Estilos</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
+<section class="section cta dark">
+    <div class="container text-left" style="margin-top: 5rem;">
+        <h4 class="mb-5 display-4">
+            Detalhes
+        </h4>
+        <h5>
             @Html.DisplayNameFor(model => model.Nome)
-        </dt>
+        </h5>
 
-        <dd>
+        <p>
             @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt>
+        </p>
+
+        <h5>
             @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
+        </h5>
 
-        <dd>
+        <p>
             @Html.DisplayFor(model => model.Descricao)
-        </dd>
+        </p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+        <a href="@Url.Action("Edit",new {id = Model.Id})" class="btn">Editar</a>
+        <a href="@Url.Action("Index")" class="btn">Voltar</a>
+    </div>
+</section>
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
