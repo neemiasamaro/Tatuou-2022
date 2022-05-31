@@ -15,7 +15,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Estudio.ToList());
+            return View(db.Estudio);
         }
 
         [Authorize(Roles = "Admin")]

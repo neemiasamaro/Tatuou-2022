@@ -1,25 +1,27 @@
 ﻿@model WebApplication1.Models.Estudio
+<section class="section cta dark">
+    <input type="hidden" value="@Model.Id" id="estudioId" />
 
-<input type="hidden" value="@Model.Id" id="estudioId"/>
-
-@foreach (var item in ViewBag.Estilos)
-{
-<div class="col-md-3">
-    @if (Model.EstudioEstilos.Where(p => p.EstilosId == item.Id).ToList().Count > 0)
+    @foreach (var item in ViewBag.Estilos)
     {
-        <input type="checkbox" class="check" rel="@item.Id" checked="checked"/>
-    }
-    else
-    {
-        <input type="checkbox" class="check" rel="@item.Id" />
+        <div class="col-md-3">
+            @if (Model.EstudioEstilos.Where(p => p.EstilosId == item.Id).ToList().Count > 0)
+            {
+                <input type="checkbox" class="check" rel="@item.Id" checked="checked" />
+            }
+            else
+            {
+                <input type="checkbox" class="check" rel="@item.Id" />
+            }
+
+            @item.Nome
+
+            <br />
+            @item.Descricao
+        </div>
     }
 
-    @item.Nome
-
-    <br />
-    @item.Descricao
-</div>
-}
+</section>
 
 
 
@@ -36,7 +38,7 @@
                 data: { id, estudioId },
                 success: function (retorno) {
                     if (retorno == "t") {
-                        $(this).attr('checked','checked');
+                        $(this).attr('checked', 'checked');
                     }
                     else if (retorno == "f") {
                         $(this).removeAttr('checked');
