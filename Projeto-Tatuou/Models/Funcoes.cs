@@ -33,7 +33,7 @@ namespace WebApplication1.Models
             try
             {
                 //Cria o endereço de email do remetente
-                MailAddress de = new MailAddress("Fatec ADS <fatecgtaads@gmail.com>");
+                MailAddress de = new MailAddress("tatuouadm@gmail.com");
                 //Cria o endereço de email do destinatário -->
                 MailAddress para = new MailAddress(emailDestinatario);
                 MailMessage mensagem = new MailMessage(de, para);
@@ -50,8 +50,13 @@ namespace WebApplication1.Models
                 cliente.Send(mensagem);
                 return "success|E-mail enviado com sucesso";
             }
-            catch { return "error|Erro ao enviar e-mail"; }
+            catch(Exception e) 
+            {
+                Console.WriteLine(e);
+                return "error|Erro ao enviar e-mail"; 
+            }
         }
+
         public static string Codifica(string texto)
         {
             byte[] stringBase64 = new byte[texto.Length];
@@ -84,6 +89,21 @@ namespace WebApplication1.Models
             else
                 return false;
         }
+
+        public static bool CriarPortfolio(int id)
+        {
+            Estudio estudio = new Estudio();
+            string dir = HttpContext.Current.Request.PhysicalApplicationPath + "Uploads\\" + id + "\\Portfolio";
+            if (!Directory.Exists(dir))
+            {
+                //Caso não exista devermos criar
+                Directory.CreateDirectory(dir);
+                return true;
+            }
+            else
+                return false;
+        }
+
         public static bool ExcluirArquivo(string arq)
         {
             if (File.Exists(arq))
@@ -120,6 +140,33 @@ namespace WebApplication1.Models
             }
             catch { return "Erro no Upload"; }
         }
+        public static string UploadPortfolio(HttpPostedFileBase flpUpload, string nome, int id)
+        {
+            try
+            {
+                double permitido = 900;
+                if (flpUpload != null)
+                {
+                    string arq = Path.GetFileName(flpUpload.FileName);
+                    double tamanho = Convert.ToDouble(flpUpload.ContentLength) / 1024;
+                    string extensao = Path.GetExtension(flpUpload.FileName).ToLower();
+                    string diretorio = HttpContext.Current.Request.PhysicalApplicationPath + "Uploads\\" + id + "\\Porftolio\\" + nome;
+                    if (tamanho > permitido)
+                        return "Tamanho Máximo permitido é de " + permitido + " kb!";
+                    else if ((extensao != ".png" && extensao != ".jpg"))
+                        return "Extensão inválida, só são permitidas .png e .jpg!";
+                    else
+                    {
+                        flpUpload.SaveAs(diretorio);
+                        return "sucesso";
+                    }
+                }
+                else
+                    return "Erro no Upload!";
+            }
+            catch { return "Erro no Upload"; }
+        }
+
         public static string UploadEstilos(HttpPostedFileBase flpUpload, string nome)
         {
             try

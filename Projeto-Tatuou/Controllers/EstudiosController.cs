@@ -15,13 +15,45 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Estudio);
+            //string sql = "select Nome from estilos A inner join estudioestiloes B on A.Id = B.EstilosId inner join estudios C on B.EstudioId = C.Id";
+            //ViewBag.Estudio = db.Estudio.SqlQuery(sql).Where(p => p.Disponivel == true).ToList();
+            return View(db.Estudio.Where(p => p.Disponivel == true).ToList());
         }
 
         [Authorize(Roles = "Admin")]
         public ActionResult Estudios()
         {
             return View(db.Estudio.ToList());
+        }
+
+        public ActionResult Editar(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Estudio estudio = db.Estudio.Where(p => p.Id == id).ToList().FirstOrDefault();
+            Estudio resultado = db.Estudio.Find(id);
+            if (estudio == null || resultado == null)
+            {
+                TempData["MSG"] = "error|Permissão negada para acesso a esta página";
+                return RedirectToAction("Index");
+            }
+            return View(estudio);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar([Bind(Include = "Id,Bio,UsuarioId,Bairro,Logradouro,Complemento,Cidade,Estado,Facebook,Instagram,Linkedin,Twitter,Whatsapp,NomeEstudio,Cep,Numero,Cnpj,Disponivel,Foto")]Estudio estudio)
+        {
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(estudio).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(estudio);
         }
 
         [Authorize(Roles = "Admin")]
@@ -42,7 +74,7 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditarEstudios([Bind(Include = "Id,UsuarioId,Bairro,Logradouro,Complemento,Cidade,Estado,Whatsapp,Facebook,Instagram,Site,NomeEstudio,Cep,Numero,Cnpj,Disponivel")] Estudio estudio)
+        public ActionResult EditarEstudios([Bind(Include = "Id,Bio,UsuarioId,Bairro,Logradouro,Complemento,Cidade,Estado,Facebook,Instagram,Linkedin,Twitter,Whatsapp,NomeEstudio,Cep,Numero,Cnpj,Disponivel,Foto")] Estudio estudio)
         {
             if (ModelState.IsValid)
             {
@@ -218,6 +250,53 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 return Json("t");
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Portfolio(int? id, HttpPostedFileBase arquivo)
+        {
+            string valor = "";
+            if (ModelState.IsValid)
+            {
+                Estudio estudio = db.Estudio.Find(id);
+                Portfolio port = new Portfolio();
+                if (arquivo != null)
+                {
+                    Funcoes.CriarPortfolio(estudio.Id);
+                    string nomearq = DateTime.Now + "-" + estudio.Id + ".png";
+                    valor = Funcoes.UploadPortfolio(arquivo, nomearq, estudio.Id);
+                    if (valor == "sucesso")
+                    {
+                        port.Imagem = nomearq;
+                        db.Entry(estudio).State = EntityState.Modified;
+                        db.SaveChanges();
+                        TempData["MSG"] = "success|Usuário cadastrado com sucesso";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        System.IO.File.Copy(Request.PhysicalApplicationPath + "Uploads\\user.png", Request.PhysicalApplicationPath + "Uploads\\" + estudio.Id + "\\Porfolio\\" + DateTime.Now + "-" + estudio.Id + ".png");
+                        port.Imagem = DateTime.Now + "-" + estudio.Id + ".png";
+                        db.Entry(estudio).State = EntityState.Modified;
+                        db.SaveChanges();
+                        TempData["MSG"] = "warning|Problema no Upload da foto: " + valor;
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    System.IO.File.Copy(Request.PhysicalApplicationPath + "Uploads\\user.png", Request.PhysicalApplicationPath +
+                    "Uploads\\" + estudio.Id + "\\Porfolio\\" + DateTime.Now + "-" + estudio.Id + ".png");
+                    port.Imagem = DateTime.Now + "-" + estudio.Id + ".png";
+                    db.Entry(estudio).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["MSG"] = "success|Usuário cadastrado com sucesso";
+                    return RedirectToAction("Index");
+                }
+
+            }
+            return View();
         }
 
     }

@@ -1,14 +1,12 @@
-﻿@model WebApplication1.Models.CadastroEstudio
-
+﻿@model WebApplication1.Models.Estudio
 @{
-    ViewBag.Title = "Cadastro";
+    ViewBag.Title = "Editar";
 }
-
 <section class="section cta dark">
     <div class="container" style="margin-top: 5rem;">
         <div class="row">
             <div class="col-md-12">
-                @using (Html.BeginForm("Cadastro", "Estudios", FormMethod.Post, new
+                @using (Html.BeginForm("Editar", "Estudios", FormMethod.Post, new
                 {
                     enctype = "multipart/form-data"
                 }))
@@ -42,80 +40,78 @@
                             <div class="col-md-12 text-left mt-3">
                                 <h4><strong>Informações do Estúdio</strong></h4>
                             </div>
-                            <div class="form-outline col-md-6 mb-4">
-                                @Html.LabelFor(model => model.NomeEstudio, htmlAttributes: new { @class = "control-label text-left" })
-                                @Html.EditorFor(model => model.NomeEstudio, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.NomeEstudio, "", new { @class = "text-danger" })
+                            <div class="form-outline col-md-6">
+                                @Html.LabelFor(model => model.nomeEstudio, htmlAttributes: new { @class = "control-label text-left" })
+                                @Html.EditorFor(model => model.nomeEstudio, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.nomeEstudio, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-6 mb-4">
+                            <div class="form-outline col-md-6">
                                 @Html.LabelFor(model => model.Cnpj, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Cnpj, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Cnpj, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-12 mb-4">
+                            <div class="form-outline col-md-12">
                                 @Html.LabelFor(model => model.Bio, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.TextAreaFor(model => model.Bio, new { htmlAttributes = new { @class = "form-control", @rows = "5", @cols = "30" } })
                                 @Html.ValidationMessageFor(model => model.Bio, "", new { @class = "text-danger" })
                             </div>
-
-                            <div class="col-md-12 text-left mt-1">
+                            <div class="col-md-12 text-left mt-5">
                                 <h4><strong>Endereço do Estúdio</strong></h4>
                             </div>
-                            <div class="form-outline col-md-3 mb-4">
+                            <div class="form-outline col-md-3">
                                 @Html.LabelFor(model => model.Cep, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control", @id = "cep" } })
-                                @Html.ValidationMessageFor(model => model.Cep, "")
-                            </div> 
-                            <div class="form-outline col-md-6 mb-4">
+                                @Html.ValidationMessageFor(model => model.Cep, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-outline col-md-6">
                                 @Html.LabelFor(model => model.Logradouro, htmlAttributes: new { @class = "control-label text-left " })
                                 @Html.EditorFor(model => model.Logradouro, new { htmlAttributes = new { @class = "form-control", @id = "logradouro" } })
                                 @Html.ValidationMessageFor(model => model.Logradouro, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-3 mb-4">
+                            <div class="form-outline col-md-3">
                                 @Html.LabelFor(model => model.Numero, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Numero, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Numero, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-3 mb-4">
+                            <div class="form-outline col-md-3">
                                 @Html.LabelFor(model => model.Complemento, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Complemento, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Complemento, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-3 mb-4">
+                            <div class="form-outline col-md-3">
                                 @Html.LabelFor(model => model.Bairro, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control", @id = "bairro" } })
                                 @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-5 mb-4">
+                            <div class="form-outline col-md-5">
                                 @Html.LabelFor(model => model.Cidade, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control", @id = "localidade" } })
                                 @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-1 mb-4">
+                            <div class="form-outline col-md-1">
                                 @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control", @id = "uf" } })
                                 @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
                             </div>
-
-                            <div class="col-md-12 text-left mt-1">
+                            <div class="col-md-12 text-left mt-5">
                                 <h4><strong>Redes Sociais</strong></h4>
                             </div>
-                            <div class="form-outline col-md-6 mb-4">
+                            <div class="form-outline col-md-6">
                                 @Html.LabelFor(model => model.Facebook, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Facebook, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Facebook, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-6 mb-4">
+                            <div class="form-outline col-md-6">
                                 @Html.LabelFor(model => model.Instagram, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Instagram, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Instagram, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-6 mb-4">
+                            <div class="form-outline col-md-6">
                                 @Html.LabelFor(model => model.Linkedin, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Linkedin, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Linkedin, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-outline col-md-6 mb-4">
+                            <div class="form-outline col-md-6">
                                 @Html.LabelFor(model => model.Twitter, htmlAttributes: new { @class = "control-label text-left" })
                                 @Html.EditorFor(model => model.Twitter, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Twitter, "", new { @class = "text-danger" })
@@ -129,8 +125,11 @@
                                 </div>
                                 <div class="form-outline">
                                 </div>*@
-                            <div class="form-outline col-12">
-                                <input type="submit" value="Cadastrar meu Estúdio" class="btn btn-block" />
+                            <div class="form-outline col-6">
+                                <a href="~/Estudios/MeuPerfil/@Html.DisplayFor(model => model.Id)" class="btn btn-block">Voltar</a>
+                            </div>
+                            <div class="form-outline col-6">
+                                <input type="submit" value="Salvar" class="btn btn-block" />
                             </div>
                         </div>
                     </div>

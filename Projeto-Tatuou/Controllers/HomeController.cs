@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "E-mail e/ou Senha inválidos ou não encontrados");
+                    TempData["MSG"] = "error|E-mail e/ou Senha inválidos ou não encontrados";
                     return View(acesso);
                 }
             }
@@ -130,17 +130,18 @@ namespace WebApplication1.Controllers
             }
             return View(msg);
         }
+
         public ActionResult EsqueceuSenha()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EsqueceuSenha(EsqueceuSenha esq)
         {
             if (ModelState.IsValid)
             {
-                Contexto db = new Contexto();
                 var usu = db.Usuario.Where(x => x.Email == esq.Email).ToList().FirstOrDefault();
                 if (usu != null)
                 {
@@ -148,8 +149,8 @@ namespace WebApplication1.Controllers
                     db.Entry(usu).State = EntityState.Modified;
                     db.SaveChanges();
                     string msg = "<h3>Sistema</h3>";
-                    msg += "Para alterar sua senha <a href='http://localhost:55803//Home/Redefinir/" + usu.Hash + "' target='_blank'>clique aqui</a>";
-                    Funcoes.EnviarEmail(usu.Email, "Redefinição de senha", msg);
+                    msg += "Para alterar sua senha <a href='http://localhost:26786/Home/Redefinir/" + usu.Hash + "' target='_blank'>clique aqui</a>";
+                    TempData["MSG"] = Funcoes.EnviarEmail(usu.Email, "Redefinição de senha", msg);
                     return RedirectToAction("Index");
                 }
                 TempData["MSG"] = "error|E-mail não encontrado";
@@ -159,36 +160,10 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Redefinir(RedefinirSenha red)
-        {
-            if (ModelState.IsValid)
-            {
-                Contexto db = new Contexto();
-                var usu = db.Usuario.Where(x => x.Hash == red.Hash).ToList().FirstOrDefault();
-                if (usu != null)
-                {
-                    usu.Hash = null;
-                    usu.Senha = Funcoes.HashTexto(red.Senha, "SHA512");
-                    db.Entry(usu).State = EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["MSG"] = "success|Senha redefinida com sucesso!";
-                    return RedirectToAction("Index");
-                }
-                TempData["MSG"] = "error|E-mail não encontrado";
-                return View(red);
-            }
-            TempData["MSG"] = "warning|Preencha todos os campos";
-            return View(red);
-        }
-
-
         public ActionResult Redefinir(string id)
         {
             if (!String.IsNullOrEmpty(id))
             {
-                Contexto db = new Contexto();
                 var usu = db.Usuario.Where(x => x.Hash == id).ToList().FirstOrDefault();
                 if (usu != null)
                 {
@@ -217,6 +192,31 @@ namespace WebApplication1.Controllers
             TempData["MSG"] = "error|Acesso inválido!";
             return RedirectToAction("Index");
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Redefinir(RedefinirSenha red)
+        {
+            if (ModelState.IsValid)
+            {
+                var usu = db.Usuario.Where(x => x.Hash == red.Hash).ToList().FirstOrDefault();
+                if (usu != null)
+                {
+                    usu.Hash = null;
+                    usu.Senha = Funcoes.HashTexto(red.Senha, "SHA512");
+                    db.Entry(usu).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["MSG"] = "success|Senha redefinida com sucesso!";
+                    return RedirectToAction("Index");
+                }
+                TempData["MSG"] = "error|E-mail não encontrado";
+                return View(red);
+            }
+            TempData["MSG"] = "warning|Preencha todos os campos";
+            return View(red);
+        }
+
 
 
     }

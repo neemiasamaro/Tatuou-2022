@@ -10,17 +10,9 @@
     <link rel="stylesheet" href="~/Content/main.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!--<link href="https://fonts.googleapis.com/css2?family=Water+Brush&display=swap" rel="stylesheet">-->
-    <!--<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" />
-    @if (ViewBag.Title == "Index" || ViewBag.Title == "Estilos")
-    {
-        <link rel="stylesheet" href="~/Content/Index.css" />
-    }
-    else if (ViewBag.Title == "Cadastro" || ViewBag.Title == "Login")
-    {
-        <link rel="stylesheet" href="~/Content/Forms.css" />
-    }
 </head>
 <body>
     <header id="master-header">
@@ -31,9 +23,7 @@
                         <img src="~/images/logo.png" alt="Tatuou">
                     </a>
                 </h1>
-
                 <!-- ============ Main Navigation - START ============ -->
-
                 <a id="nav-toggle" href="#"><span></span></a>
                 <nav id="nav-menu">
                     <ul>
@@ -49,12 +39,6 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="@Url.Action("Estudios","Estudios")" class="nav-link">Lista de Estúdios</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Cadastro","Estudios")" class="nav-link">Cadastre seu Estúdio</a>
                                 </li>
                             }
                         }
@@ -74,13 +58,6 @@
                                     <a href="@Url.Action("Sair", "Home")" class="nav-link">Sair</a>
                                 </li>
                             }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Sair", "Home")" class="nav-link">@User.Identity.Name.Split('|')[1] - Sair</a>
-                                </li>
-                            }
-
                         }
                         else
                         {
@@ -95,27 +72,18 @@
             </div>
         </div>
     </header>
-
     <main class="container-fluid p-0">
         @RenderBody()
     </main>
-
     <footer class="dark">
-
         <div class="container">
-
             <div class="row">
-
                 <div class="footer-col col-md-4">
-
                     <h3 class="focus-title">Sobre nós</h3>
                     <p><img width="200" class="align-center" src="~/images/logo.png" alt="TATUOU - O lugar de todos os estilos"></p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet facilis iusto quam, nisi voluptates minima. Nihil quasi dolore odio nulla sequi, ipsum placeat distinctio vero neque maxime, et reprehenderit asperiores.</p>
-
                 </div>
-
                 <div class="footer-col footer-contacts col-md-4">
-
                     <div class="contact-item"><strong>Entre em contato conosco ou visite nossas redes sociais</strong></div>
                     <div class="contact-item"><span>Telefone:</span> <strong>(12) 99634-4685</strong></div>
                     <div class="contact-item"><span>Email:</span> <strong><a href="#">tatuou@gmail.com</a></strong></div>
@@ -127,19 +95,13 @@
                             <li><a title="Instagram" href="#"><i class="fa fa-instagram"></i></a></li>
                         </ul>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
         <div class="copyright">
             &copy; 2022 - <strong>TATUOU</strong>
         </div>
-
     </footer>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -150,10 +112,9 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     @RenderSection("scripts", required: false)
-    @*<script src="https://cdn.tiny.cloud/1/no-apikey/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>*@
+    <script src="https://cdn.tiny.cloud/1/no-apikey/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>tinymce.init({ selector: 'textarea' });</script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
     @if (TempData["MSG"] != null)
     {
         <script>

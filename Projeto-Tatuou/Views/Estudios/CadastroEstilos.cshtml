@@ -1,25 +1,31 @@
 ﻿@model WebApplication1.Models.Estudio
 <section class="section cta dark">
-    <input type="hidden" value="@Model.Id" id="estudioId" />
-
-    @foreach (var item in ViewBag.Estilos)
-    {
-        <div class="col-md-3">
-            @if (Model.EstudioEstilos.Where(p => p.EstilosId == item.Id).ToList().Count > 0)
-            {
-                <input type="checkbox" class="check" rel="@item.Id" checked="checked" />
-            }
-            else
-            {
-                <input type="checkbox" class="check" rel="@item.Id" />
-            }
-
-            @item.Nome
-
-            <br />
-            @item.Descricao
+    <div class="container mt-5 py-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h3 style="font-size: 2.5rem;">Selecione seus Estilos</h3>
+            </div>
         </div>
-    }
+        <input type="hidden" value="@Model.Id" id="estudioId" />
+        <div class="row mt-5">
+            @foreach (var item in ViewBag.Estilos)
+            {
+                <div class="col-md-3">
+                    @if (Model.EstudioEstilos.Where(p => p.EstilosId == item.Id).ToList().Count > 0)
+                    {
+                        <input type="checkbox" class="check" rel="@item.Id" checked="checked" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="check" rel="@item.Id" />
+                    }
+                    <h4>@item.Nome</h4>
+                </div>
+            }
+        </div>
+    </div>
+
+
 
 </section>
 

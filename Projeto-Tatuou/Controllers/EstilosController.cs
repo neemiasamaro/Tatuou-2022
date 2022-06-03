@@ -27,21 +27,6 @@ namespace Projeto_Tatuou.Controllers
         {
             return View(db.Estilos.Where(p => p.Status == true).ToList());
         }
-        // GET: Estilos/Details/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Estilos estilos = db.Estilos.Find(id);
-            if (estilos == null)
-            {
-                return HttpNotFound();
-            }
-            return View(estilos);
-        }
 
         // GET: Estilos/Create
         [Authorize(Roles = "Admin")]

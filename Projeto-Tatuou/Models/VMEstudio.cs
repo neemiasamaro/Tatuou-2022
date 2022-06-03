@@ -53,8 +53,8 @@ namespace WebApplication1.Models
 
         public string Foto { get; set; }
 
-        //public string Imagens { get; set; }
+        public string Imagens { get; set; }
 
-        //public ICollection<Portfolio> Portfolio { get; set; }
+        public ICollection<Portfolio> Portfolio { get; set; }
     }
 }

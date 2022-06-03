@@ -59,7 +59,8 @@ namespace WebApplication1.Models
 
         [MaxLength(100)]
         public string Foto { get; set; }
-        //public ICollection<Portfolio> Portfolio { get; set; }
+
+        public ICollection<Portfolio> Portfolio { get; set; }
 
     }
 }
