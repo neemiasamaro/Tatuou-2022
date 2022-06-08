@@ -43,18 +43,6 @@ namespace WebApplication1.Models
         public string Senha { get; set; }
     }
 
-    public class Mensagem
-    {
-        [EmailAddress]
-        [Required]
-        public string Email { get; set; }
-        [Required]
-        public string Assunto { get; set; }
-        [DataType(DataType.MultilineText)]
-        [Display(Name = "Mensagem")]
-        public string CorpoMsg { get; set; }
-    }
-
     public class EsqueceuSenha
     {
         [EmailAddress]

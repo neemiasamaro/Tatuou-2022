@@ -6,6 +6,7 @@ using System.Web;
 using System.Text;
 using System.Net.Mail;
 using System.IO;
+using System.Net;
 
 namespace WebApplication1.Models
 {
@@ -33,7 +34,7 @@ namespace WebApplication1.Models
             try
             {
                 //Cria o endereço de email do remetente
-                MailAddress de = new MailAddress("tatuouadm@gmail.com");
+                MailAddress de = new MailAddress("Tatuou Admin <tatuouadm@gmail.com>");
                 //Cria o endereço de email do destinatário -->
                 MailAddress para = new MailAddress(emailDestinatario);
                 MailMessage mensagem = new MailMessage(de, para);
@@ -46,6 +47,8 @@ namespace WebApplication1.Models
                 mensagem.Priority = MailPriority.Normal;
                 //Cria o objeto que envia o e-mail
                 SmtpClient cliente = new SmtpClient();
+                cliente.UseDefaultCredentials = false;
+                cliente.Credentials = new NetworkCredential("tatuouadm@gmail.com", "SenhaTatuou71");
                 //Envia o email
                 cliente.Send(mensagem);
                 return "success|E-mail enviado com sucesso";
@@ -180,8 +183,8 @@ namespace WebApplication1.Models
                     string diretorio = HttpContext.Current.Request.PhysicalApplicationPath + "images\\estilos\\" + nome;
                     if (tamanho > permitido)
                         return "Tamanho Máximo permitido é de " + permitido + " kb!";
-                    else if ((extensao != ".png" && extensao != ".jpg"))
-                        return "Extensão inválida, só são permitidas .png e .jpg!";
+                    else if ((extensao != ".png" && extensao != ".jpg" && extensao != ".jpeg"))
+                        return "Extensão inválida, só são permitidas .png, .jpg e .jpeg!";
                     else
                     {
                         flpUpload.SaveAs(diretorio);

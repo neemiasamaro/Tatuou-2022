@@ -178,9 +178,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202205311731579_Banco.cs" />
-    <Compile Include="Migrations\202205311731579_Banco.designer.cs">
-      <DependentUpon>202205311731579_Banco.cs</DependentUpon>
+    <Compile Include="Migrations\202206072111023_Banco.cs" />
+    <Compile Include="Migrations\202206072111023_Banco.designer.cs">
+      <DependentUpon>202206072111023_Banco.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexto.cs" />
@@ -203,9 +203,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\user.png" />
     <Content Include="Scripts\confirmador.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\pt-br.js" />
+    <Content Include="Uploads\user.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -254,8 +256,8 @@
     <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202205311731579_Banco.resx">
-      <DependentUpon>202205311731579_Banco.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202206072111023_Banco.resx">
+      <DependentUpon>202206072111023_Banco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

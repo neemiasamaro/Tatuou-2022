@@ -40,6 +40,9 @@
                                 <li class="nav-item">
                                     <a href="@Url.Action("Estudios","Estudios")" class="nav-link">Lista de Estúdios</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Sair", "Home")" class="nav-link">@User.Identity.Name.Split('|')[1] - Sair</a>
+                                </li>
                             }
                         }
                         else
@@ -81,7 +84,7 @@
                 <div class="footer-col col-md-4">
                     <h3 class="focus-title">Sobre nós</h3>
                     <p><img width="200" class="align-center" src="~/images/logo.png" alt="TATUOU - O lugar de todos os estilos"></p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet facilis iusto quam, nisi voluptates minima. Nihil quasi dolore odio nulla sequi, ipsum placeat distinctio vero neque maxime, et reprehenderit asperiores.</p>
+                    <p>Somos uma plataforma na qual estúdios de tatuagem de todo o Brasil podem se cadastrar e divulgar seu portfólio de trabalhos, atraindo cada vez mais clientes para o seu negócio.</p>
                 </div>
                 <div class="footer-col footer-contacts col-md-4">
                     <div class="contact-item"><strong>Entre em contato conosco ou visite nossas redes sociais</strong></div>
@@ -90,9 +93,9 @@
                     <div class="contact-item">
                         <span>Nossas redes sociais:</span>
                         <ul class="social-links">
-                            <li><a title="Facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a title="Twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a title="Instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a title="Facebook" href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            <li><a title="Twitter" href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                            <li><a title="Instagram" href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -113,7 +116,6 @@
             crossorigin="anonymous"></script>
     @RenderSection("scripts", required: false)
     <script src="https://cdn.tiny.cloud/1/no-apikey/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>tinymce.init({ selector: 'textarea' });</script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     @if (TempData["MSG"] != null)
     {
@@ -138,13 +140,6 @@
                 });
         </script>
     }
-    <script>
-        $(document).ready(function () {
-            $('.table').DataTable(
-                { "lengthMenu": [10] });
-
-        });
-    </script>
     <script src="~/Scripts/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/pt-br.js"></script>

@@ -111,26 +111,6 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Email()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult Email(Mensagem msg)
-        {
-            if (ModelState.IsValid)
-            {
-                TempData["MSG"] = Funcoes.EnviarEmail(msg.Email, msg.Assunto, msg.CorpoMsg);
-            }
-            else
-            {
-                TempData["MSG"] = "warning|Preencha todos os campos";
-            }
-            return View(msg);
-        }
-
         public ActionResult EsqueceuSenha()
         {
             return View();

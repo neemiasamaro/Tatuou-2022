@@ -5,8 +5,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="card py-5 px-5">
-                    <h4 class="display-4"><strong style="color:black;">Listagem de Estúdios</strong></h4>
-                    <table class="table">
+                    <h4 class="display-4" style="color:black;">Listagem de Estúdios</h4>
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>
@@ -29,9 +29,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                @foreach (var item in Model)
-                                {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Id)
                                     </td>
@@ -52,11 +52,11 @@
                                         }
                                         @ViewBag.Disponivel
                                     </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "EditarEstudios", new { id = item.Id })
+                                    <td class="text-center">
+                                        <a href="@Url.Action("EditarEstudios", "Estudios", new { id = item.Id })"><i class="bi bi-pencil-square" style="font-size: 1.5em !important; color: black !important;"></i></a>
                                     </td>
-                                }
-                            </tr>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

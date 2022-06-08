@@ -1039,6 +1039,7 @@ h6 i {
     }
 
 .work-thumb {
+    border-radius: 15px;
     position: relative;
     overflow: hidden;
 }

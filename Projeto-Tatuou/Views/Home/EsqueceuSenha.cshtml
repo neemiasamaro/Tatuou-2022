@@ -5,12 +5,12 @@
 }
 
 <section class="section cta dark">
-    <div class="container">
+    <div class="container" style="margin-top:3rem;">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 @using (Html.BeginForm())
                 {
-                    <h3 class="display-3"><strong>Recuperar Senha</strong></h3>
+                    <h3 class="mb-5 text-center display-3"><strong>Recuperar Senha</strong></h3>
                     <p style="font-size: 1.5rem;">
                         Se você não lembra sua senha, digite seu e-mail e enviaremos detalhes de como recuperá-la
                     </p>
@@ -19,7 +19,7 @@
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-outline">
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control",@placeholder = "Email" } })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>

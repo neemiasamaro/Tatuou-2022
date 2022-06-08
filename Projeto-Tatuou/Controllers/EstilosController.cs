@@ -49,14 +49,14 @@ namespace Projeto_Tatuou.Controllers
                 db.SaveChanges();
                 if (arquivo != null)
                 {
-                    string nomearq = estilos.Id + estilos.Nome + ".png";
+                    string nomearq = estilos.Nome.ToLower() + ".png";
                     valor = Funcoes.UploadEstilos(arquivo, nomearq);
                     if (valor == "sucesso")
                     {
                         estilos.Foto = nomearq;
                         db.Entry(estilos).State = EntityState.Modified;
                         db.SaveChanges();
-                        TempData["MSG"] = "success|Usuário cadastrado com sucesso";
+                        TempData["MSG"] = "success|Estilo cadastrado com sucesso";
                         return RedirectToAction("Index");
                     }
                     else

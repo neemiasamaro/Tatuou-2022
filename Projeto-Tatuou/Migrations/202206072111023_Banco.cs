@@ -62,6 +62,18 @@
                 .Index(t => t.UsuarioId);
             
             CreateTable(
+                "dbo.Portfolios",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        EstudioId = c.Int(nullable: false),
+                        Imagem = c.String(maxLength: 100, storeType: "nvarchar"),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Estudios", t => t.EstudioId, cascadeDelete: true)
+                .Index(t => t.EstudioId);
+            
+            CreateTable(
                 "dbo.Usuarios",
                 c => new
                     {
@@ -87,35 +99,23 @@
                     })
                 .PrimaryKey(t => t.Id);
             
-            CreateTable(
-                "dbo.Portfolios",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        EstudioId = c.Int(nullable: false),
-                        Imagem = c.String(maxLength: 100, storeType: "nvarchar"),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Estudios", t => t.EstudioId, cascadeDelete: true)
-                .Index(t => t.EstudioId);
-            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Portfolios", "EstudioId", "dbo.Estudios");
             DropForeignKey("dbo.Estudios", "UsuarioId", "dbo.Usuarios");
             DropForeignKey("dbo.Usuarios", "PerfilId", "dbo.Perfils");
+            DropForeignKey("dbo.Portfolios", "EstudioId", "dbo.Estudios");
             DropForeignKey("dbo.EstudioEstiloes", "EstudioId", "dbo.Estudios");
             DropForeignKey("dbo.EstudioEstiloes", "EstilosId", "dbo.Estilos");
-            DropIndex("dbo.Portfolios", new[] { "EstudioId" });
             DropIndex("dbo.Usuarios", new[] { "PerfilId" });
+            DropIndex("dbo.Portfolios", new[] { "EstudioId" });
             DropIndex("dbo.Estudios", new[] { "UsuarioId" });
             DropIndex("dbo.EstudioEstiloes", new[] { "EstilosId" });
             DropIndex("dbo.EstudioEstiloes", new[] { "EstudioId" });
-            DropTable("dbo.Portfolios");
             DropTable("dbo.Perfils");
             DropTable("dbo.Usuarios");
+            DropTable("dbo.Portfolios");
             DropTable("dbo.Estudios");
             DropTable("dbo.EstudioEstiloes");
             DropTable("dbo.Estilos");
