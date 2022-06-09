@@ -381,7 +381,7 @@ h5,
 h6 {
     margin-bottom: 20px;
     color: #161616;
-   font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: bold;
 }
 
@@ -972,7 +972,7 @@ h6 i {
     display: block;
     padding: 60px 20px;
     color: #161616;
-   font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 30px;
     letter-spacing: -1px;
     border-top: 1px solid #eeeeee;
@@ -2314,7 +2314,7 @@ hr {
     top: 0;
     line-height: 1;
     color: #161616;
-   font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 64px;
     font-weight: bold;
     opacity: 1;
@@ -3690,6 +3690,10 @@ img.mfp-img {
     border-radius: 15px;
 }
 
+ul, li > h4 {
+    color: black !important;
+}
+
 .upload-foto {
     width: 200px;
     height: 200px;
@@ -3716,4 +3720,16 @@ th, td {
 
 label {
     font-size: 1.25rem;
+}
+
+@media (max-width:1366px){
+    .titulo{
+        padding: 0;
+    }
+}
+
+@media (min-width: 1400px){
+    .titulo {
+        padding-top: 3rem !important;
+    }
 }

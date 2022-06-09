@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 using System.Data.Entity;
+using System.IO;
 
 namespace WebApplication1.Controllers
 {
@@ -91,8 +92,14 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estudio estudio = db.Estudio.Where(p => p.UsuarioId == id).ToList().FirstOrDefault();
-            if (estudio == null)
+            Estudio estudio = db.Estudio.Include(x=>x.Portfolio).Where(p => p.UsuarioId == id).ToList().FirstOrDefault();
+            var aprovado = db.Estudio.Where(p => p.Disponivel == true).ToList().FirstOrDefault();
+            if(aprovado != null)
+            {
+                TempData["MSG"] = "warning|Estúdio aguardando aprovação!";
+                return View(estudio);
+            }
+	        if (estudio == null)
             {
                 TempData["MSG"] = "error|Permissão negada para acesso a esta página";
                 return RedirectToAction("Index");
@@ -254,49 +261,60 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Portfolio(int? id, HttpPostedFileBase arquivo)
+        public ActionResult Portfolio(int id, int idusu, HttpPostedFileBase[] arquivos)
         {
             string valor = "";
             if (ModelState.IsValid)
             {
                 Estudio estudio = db.Estudio.Find(id);
-                Portfolio port = new Portfolio();
-                if (arquivo != null)
+                
+                if (arquivos != null)
                 {
                     Funcoes.CriarPortfolio(estudio.Id);
-                    string nomearq = DateTime.Now + "-" + estudio.Id + ".png";
-                    valor = Funcoes.UploadPortfolio(arquivo, nomearq, estudio.Id);
-                    if (valor == "sucesso")
+                    int cont = 0;
+                    foreach(var upload in arquivos)
                     {
-                        port.Imagem = nomearq;
-                        db.Entry(estudio).State = EntityState.Modified;
-                        db.SaveChanges();
-                        TempData["MSG"] = "success|Usuário cadastrado com sucesso";
-                        return RedirectToAction("Index");
+                        if (db.Portfolio.Where(x=>x.EstudioId==id).ToList().Count < 5)
+                        {
+                            string extensao = Path.GetExtension(upload.FileName).ToLower();
+                            string nomearq = estudio.Id.ToString() + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + extensao;
+                            valor = Funcoes.UploadPortfolio(upload, nomearq, estudio.Id);
+                            if (valor == "sucesso")
+                            {
+                                Portfolio port = new Portfolio();
+                                port.EstudioId = id;
+                                port.Imagem = nomearq;
+                                db.Portfolio.Add(port);
+                                db.SaveChanges();
+                                cont++;
+                            }
+                        }
+                    }
+                    
+                    
+                    if (arquivos.Count() > 0)
+                    {
+                        
+                        if (arquivos.Count() == cont)
+                        {
+                            TempData["MSG"] = "success|Imagens cadastrada com sucesso";
+                        }
+                        else if(cont>0)
+                        {
+                            TempData["MSG"] = "warning|Algumas imagens não cadastradas";
+                        }
+                        else
+                        {
+                            TempData["MSG"] = "warning|Nenhuma imagem cadastrada";
+                        }
                     }
                     else
                     {
-                        System.IO.File.Copy(Request.PhysicalApplicationPath + "Uploads\\user.png", Request.PhysicalApplicationPath + "Uploads\\" + estudio.Id + "\\Porfolio\\" + DateTime.Now + "-" + estudio.Id + ".png");
-                        port.Imagem = DateTime.Now + "-" + estudio.Id + ".png";
-                        db.Entry(estudio).State = EntityState.Modified;
-                        db.SaveChanges();
-                        TempData["MSG"] = "warning|Problema no Upload da foto: " + valor;
-                        return RedirectToAction("Index");
+                        TempData["MSG"] = "warning|Nenhuma imagem não cadastrada";
                     }
                 }
-                else
-                {
-                    System.IO.File.Copy(Request.PhysicalApplicationPath + "Uploads\\user.png", Request.PhysicalApplicationPath +
-                    "Uploads\\" + estudio.Id + "\\Porfolio\\" + DateTime.Now + "-" + estudio.Id + ".png");
-                    port.Imagem = DateTime.Now + "-" + estudio.Id + ".png";
-                    db.Entry(estudio).State = EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["MSG"] = "success|Usuário cadastrado com sucesso";
-                    return RedirectToAction("Index");
-                }
-
             }
-            return View();
+            return RedirectToAction("MeuPerfil", "Estudios", new { @id = idusu });
         }
 
     }

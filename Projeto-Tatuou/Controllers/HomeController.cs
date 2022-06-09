@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
         //[Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            return View(db.Estilos.ToList());
+            return View(db.Estilos.Where(p => p.Status == true).ToList());
         }
 
         public ActionResult Admin()
@@ -87,13 +87,21 @@ namespace WebApplication1.Controllers
                     HttpCookie cookie = new
                     HttpCookie(FormsAuthentication.FormsCookieName, hash);
                     Response.Cookies.Add(cookie);
+                    Estudio estudio = db.Estudio.Where(p => p.UsuarioId == usu.Id).ToList().FirstOrDefault();
                     if (usu.Perfil.Descricao == "Admin")
                     {
                         return RedirectToAction("Estudios", "Estudios");
                     }
                     else
                     {
-                        return RedirectToAction("Cadastro", "Estudios");
+                        if (estudio != null)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Cadastro", "Estudios");
+                        }
                     }
                 }
                 else

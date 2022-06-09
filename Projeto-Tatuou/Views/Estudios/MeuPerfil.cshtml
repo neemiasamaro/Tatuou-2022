@@ -5,7 +5,7 @@
         <header id="master-header">
             <h2 id="page-title">@Html.DisplayFor(model => model.nomeEstudio)</h2>
             <div class="header-meta artist-role">@Html.DisplayFor(model => model.Logradouro) @Html.DisplayFor(model => model.Numero), @Html.DisplayFor(model => model.Bairro) - @Html.DisplayFor(model => model.Cidade) @Html.DisplayFor(model => model.Estado)</div> <br />
-            <a class="btn md btn-popup" href="#request"><i class="fa fa-thumb-tack"></i>Agendar um horário</a>
+
         </header>
 
         <div id="main">
@@ -26,6 +26,7 @@
                                 <li><a title="Twitter" href="@Html.DisplayFor(model => model.Twitter)" target="_blank"><i class="fa fa-twitter"></i></a></li>
                                 <li><a title="Instagram" href="@Html.DisplayFor(model => model.Instagram)" target="_blank"><i class="fa fa-instagram"></i></a></li>
                                 <li><a title="LinkedIn" href="@Html.DisplayFor(model => model.Linkedin)" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a title="Whatsapp" href="@Html.DisplayFor(model => model.Whatsapp)" target="_blank"><i class="fa fa-whatsapp"></i></a></li>
                             </ul>
                             <h3 class="focus-title">Meus estilos</h3>
                             <ul class="icon-list">
@@ -42,34 +43,46 @@
                 </div>
             </div>
 
-            <div id="latest-works" class="section">
+            <div id="latest-works">
                 <div class="section-title">
                     <h2>Portfólio</h2>
                 </div>
                 <div class="row">
                     <div class="col-md-6 offset-3">
-
-                        @using (Html.BeginForm("Portfolio", "Estudios", FormMethod.Post, new
+                        @if (Model.Portfolio.Count < 5)
                         {
-                            enctype = "multipart/form-data"
-                        }))
+                        using (Html.BeginForm("Portfolio", "Estudios", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
-                            @Html.AntiForgeryToken()
-                            <div class="form-horizontal">
-                                <h3 class="mb-5 text-center display-4"><strong>Upload de Portfolio</strong></h3>
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <div class="row">
-                                    <div class="col-6 offset-3">
-                                        <input type="file" name="arquivo" />
-                                        <input type="submit" class="btn btn-block" />
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            <h3 class="mb-5 text-center display-4"><strong>Upload de Portfolio</strong></h3>
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="row">
+                                <div class="col-6 offset-3">
+                                    <input type="hidden" value="@Model.Id" name="id" />
+                                    <input type="hidden" value="@Model.UsuarioId" name="idusu" />
+                                    <input type="file" multiple="multiple" name="arquivos" />
+                                    <input type="submit" class="btn btn-block" />
 
-                                    </div>
                                 </div>
                             </div>
+                        </div>
+                        }
                         }
                     </div>
                     <div class="content container">
                         <div class="works">
+                            @foreach (var item in Model.Portfolio)
+                            {
+                                <div class="work col-md-2 col-sm-6">
+                                    <div class="work-thumb">
+                                        <img src="~/Uploads/@Model.Id/Portfolio/@item.Imagem" alt="Work 01">
+                                        <div class="thumb-links">
+                                            <a class="zoom" href="~/Uploads/@Model.Id/Portfolio/@item.Imagem"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                             <div class="work col-md-2 col-sm-6">
                                 <div class="work-thumb">
                                     <img src="" alt="Work 01">
@@ -98,7 +111,7 @@
                     </div>
                 </div>
 
-                <div id="map"></div>
+
 
                 <a class="instagram-bar" href="@Html.DisplayFor(model => model.Instagram)">Veja todos meus trabalhos no <strong>Instagram</strong>!</a>
 

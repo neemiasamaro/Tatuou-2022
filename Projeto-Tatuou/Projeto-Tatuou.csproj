@@ -196,14 +196,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Forms.css" />
     <Content Include="Content\Index.css" />
     <Content Include="Content\Login.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="Content\main.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\user.png" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\confirmador.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\pt-br.js" />

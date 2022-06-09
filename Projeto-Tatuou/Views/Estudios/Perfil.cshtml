@@ -8,7 +8,7 @@
         <header id="master-header">
             <h2 id="page-title">@Html.DisplayFor(model => model.nomeEstudio)</h2>
             <div class="header-meta artist-role">@Html.DisplayFor(model => model.Logradouro) @Html.DisplayFor(model => model.Numero), @Html.DisplayFor(model => model.Bairro) - @Html.DisplayFor(model => model.Cidade) ( @Html.DisplayFor(model => model.Estado) )</div> <br />
-            <a class="btn md btn-popup" href="#request"><i class="fa fa-thumb-tack"></i>Agendar um horário</a>
+
         </header>
 
 
@@ -36,9 +36,10 @@
 
                             <h3 class="focus-title">Meus estilos</h3>
                             <ul class="icon-list">
-                                <li><i class="fa fa-arrow-right"></i>Estilo 1</li>
-                                <li><i class="fa fa-arrow-right"></i>Estilo 2</li>
-                                <li><i class="fa fa-arrow-right"></i>Estilo 3</li>
+                                @foreach (var item in Model.EstudioEstilos)
+                                {
+                                 <li><i class="fa fa-arrow-right"></i>@item.Estilo.Nome</li>
+                                }
                             </ul>
                         </div>
 

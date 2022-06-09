@@ -1,36 +1,47 @@
 ﻿@model IEnumerable<WebApplication1.Models.Estudio>
+    <section class="section cta dark">
+        <div class="container" style="margin-top: 5rem;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card py-5 px-5">
+                        <h4 class="display-4" style="color:black;">Estúdios Aguardando Aprovação</h4>
 
-<section class="section cta dark">
-    <div class="container" style="margin-top: 5rem;">
-        <div class="row">
-            <div class="col-12">
-                <div class="card py-5 px-5">
-                    <h4 class="display-4" style="color:black;">Listagem de Estúdios</h4>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    ID
-                                </th>
-
-                                <th>
-                                    Estudio
-                                </th>
-
-                                <th>
-                                    CNPJ
-                                </th>
-                                <th>
-                                    Disponível
-                                </th>
-                                <th>
-                                    Editar
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        <ul style="text-align:left;">
                             @foreach (var item in Model)
                             {
+                            if(item.Disponivel == false){
+                            <li style="color:black !important;">
+                                <h4>@Html.DisplayFor(modelItem => item.nomeEstudio)<a href="@Url.Action("EditarEstudios","Estudios", new { id=item.Id })" class="ml-3"><i class="bi bi-pencil-square" style="color: black !important;"></i></a></h4>
+                            </li>
+                            }
+                            }
+                        </ul>
+
+                        <h4 class="display-4 mt-5" style="color:black;">Estúdios Aprovados</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Estudio
+                                    </th>
+                                    <th>
+                                        CNPJ
+                                    </th>
+                                    <th>
+                                        Disponível
+                                    </th>
+                                    <th>
+                                        Editar
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                if(item.Disponivel == true){
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Id)
@@ -42,26 +53,22 @@
                                         @Html.DisplayFor(modelItem => item.Cnpj)
                                     </td>
                                     <td>
-                                        @if (item.Disponivel == false)
+                                        @if (item.Disponivel == true)
                                         {
-                                            ViewBag.Disponivel = "Não";
-                                        }
-                                        else
-                                        {
-                                            ViewBag.Disponivel = "Sim";
+                                        ViewBag.Disponivel = "Aprovado";
                                         }
                                         @ViewBag.Disponivel
                                     </td>
                                     <td class="text-center">
-                                        <a href="@Url.Action("EditarEstudios", "Estudios", new { id = item.Id })"><i class="bi bi-pencil-square" style="font-size: 1.5em !important; color: black !important;"></i></a>
+                                        <a href="@Url.Action("EditarEstudios","Estudios", new { id=item.Id })"><i class="bi bi-pencil-square" style="font-size: 1.5em !important; color: black !important;"></i></a>
                                     </td>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
             </div>
         </div>
-    </div>
-</section>
+    </section>

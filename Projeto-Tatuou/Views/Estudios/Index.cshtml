@@ -6,13 +6,13 @@
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered">
-                    <thead>
+                    <thead class="invisible">
                         <tr>
                             <th>
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="">
                         @foreach (var item in Model)
                         {
                             <tr>
@@ -28,10 +28,14 @@
                                                     @Html.DisplayFor(modelItem => item.Cidade) -
                                                     @Html.DisplayFor(modelItem => item.Estado)
                                                 </p>
-                                                @*<h3>@ViewBag.Estudio</h3>*@
+                                                @foreach (var estilo in item.EstudioEstilos)
+                                                {
+                                                    <p>@estilo.Estilo.Nome</p>
+                                                }
+
                                             </div>
-                                            <div class="col-3">
-                                                <a href="~/Estudios/Perfil/@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary">Visitar Perfil</a>
+                                            <div class="col-3 my-auto">
+                                                <a href="~/Estudios/Perfil/@Html.DisplayFor(modelItem => item.Id)" class="btn btn-block m-0">Visitar Perfil</a>
                                             </div>
                                         </div>
                                     </div>
