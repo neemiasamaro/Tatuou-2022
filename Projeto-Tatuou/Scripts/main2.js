@@ -1,569 +1,281 @@
-( function( $ ) {
+(function ($) {
     "use strict";
 
     var THE_TATTOOIST = window.THE_TATTOOIST || {};
 
-    /*-------------------------------------------------------------------*/
-    /*      Remove the page loader to the DOM
-    /*-------------------------------------------------------------------*/
+    ///*-------------------------------------------------------------------*/
+    ///*      Toggle
+    ///*-------------------------------------------------------------------*/
 
-    THE_TATTOOIST.pageLoader = function(){
+    //THE_TATTOOIST.toggle = function () {
 
-        setTimeout(function() {
+    //    $('.open .content-toggle').show();
+    //    $('.title-toggle').on('click', function (e) {
+    //        e.preventDefault();
 
-            $('.content-loader').fadeOut(800, function(){
-                $(this).remove();
-            });
+    //        var $that = $(this),
+    //            $toggle = $that.parent(),
+    //            $contentToggle = $that.next(),
+    //            $accordion = $that.parents('.accordion');
 
-            // play header video background
-            $('#video-background').trigger('play');
+    //        if ($accordion.length > 0) {
+    //            $accordion.find('.content-toggle').slideUp('normal', function () {
+    //                $(this).parent().removeClass('open');
+    //            });
+    //            if ($that.next().is(':hidden')) {
+    //                $contentToggle.slideDown('normal', function () {
+    //                    $toggle.addClass('open');
+    //                });
+    //            }
+    //        } else {
+    //            $contentToggle.slideToggle('normal', function () {
+    //                $toggle.toggleClass('open');
+    //            });
+    //        }
+    //    });
 
-        }, 400);
+    //},
 
-    },
+    //    /*-------------------------------------------------------------------*/
+    //    /*      Scroll to Section (One Page Version)
+    //    /*-------------------------------------------------------------------*/
 
-    /*-------------------------------------------------------------------*/
-    /*      Magnific Popup Scritps
-    /*-------------------------------------------------------------------*/
+    //    THE_TATTOOIST.scrollToSection = function () {
 
-    THE_TATTOOIST.magnificPopup = function(){
+    //        $('.one-page #nav-menu a[href^="#"]').on('click', function (e) {
+    //            e.preventDefault();
 
-        // open image
-        $('.zoom').magnificPopup({
-            type: 'image'
-        });
+    //            var target = this.hash,
+    //                $section = $(target);
 
-        // open the appointment form in a popup
-        $('.btn-popup').magnificPopup({
-            type: 'inline',
-        });
+    //            $(this).parent().addClass('selected');
+    //            $('html, body').stop().animate({
+    //                scrollTop: $section.offset().top - 79
+    //            }, 900, 'swing', function () {
+    //                window.location.hash = target;
+    //            });
+    //            $('body').removeClass('open');
+    //            $('#nav-menu').find('li').removeClass('show');
 
-    },
+    //        });
 
-    /*-------------------------------------------------------------------*/
-    /*      Replace each select with a custom dropdown menu
-    /*-------------------------------------------------------------------*/
+    //    },
 
-    THE_TATTOOIST.selectReplacer = function(){
+    //    /*-------------------------------------------------------------------*/
+    //    /*      Highlight Navigation Link When Scrolling (One Page Version)
+    //    /*-------------------------------------------------------------------*/
 
-        $('select').each(function() {
-            var $select = $(this),
-                $ul = $('<ul></ul>').addClass('select-replacer'),
-                $hiddenInput = $('<input type="hidden" name="' + $select.attr('name') + '" value="' + $select.val() + '">');
+    //    THE_TATTOOIST.scrollHighlight = function () {
 
-            $select.after($ul);
-            $ul.after($hiddenInput);
+    //        var scrollPosition = $(window).scrollTop();
 
-            $select.children('option').each(function(){
-                var $that = $(this),
-                    $li = $('<li data-value="' + $that.val()+'">' + $that.text() + '</li>');
-                if ( $that.attr('class') != undefined ) {
-                    $li.addClass($that.attr('class'));
-                }
-                $ul.append($li);
-            });
+    //        if ($('body').hasClass('one-page')) {
 
-            $ul.children('li').not(':first').hide();
+    //            if (scrollPosition >= 200) {
 
-            $ul.children('li').on('click',function(){
-                var $clickedLi = $(this),
-                    dataValue = $clickedLi.data('value');
-                $clickedLi.prependTo($ul.toggleClass('open')).nextAll().toggle();
-                $hiddenInput.val(dataValue);
-                $('.hidden-field').removeClass('show').find('input').removeClass('required');
-                $('#' + $clickedLi.attr('class')).addClass('show').find('input').addClass('required');
-            });
+    //                $('.section').each(function () {
 
-            $select.remove();
+    //                    var $link = $('#nav-menu a[href="#' + $(this).attr('id') + '"');
+    //                    if ($link.length && $(this).position().top <= scrollPosition + 80) {
+    //                        $('#nav-menu li').removeClass('selected');
+    //                        $link.parent().addClass('selected');
+    //                    }
+    //                });
 
-            //close the list by clicking outside of it
-            $(document).on('click',function(e){
+    //            } else {
 
-                if ( ! $ul.find(e.target).length ) {
-                    $ul.removeClass('open').children('li').not(':first').hide();
+    //                $('#nav-menu li').removeClass('selected');
 
-                }
+    //            }
+    //        }
 
-            });
+    //    },
 
-        });
+    //    /*-------------------------------------------------------------------*/
+    //    /*      Mobile Menu
+    //    /*-------------------------------------------------------------------*/
 
-    },
+    //    THE_TATTOOIST.mobileMenu = {
 
-    /*-------------------------------------------------------------------*/
-    /*      Toggle
-    /*-------------------------------------------------------------------*/
+    //        init: function () {
 
-    THE_TATTOOIST.toggle = function(){
+    //            this.toggleMenu();
+    //            this.addClassParent();
+    //            this.addRemoveClasses();
 
-        $('.open .content-toggle').show();
-        $('.title-toggle').on('click',function(e){
-            e.preventDefault();
+    //        },
 
-            var $that = $(this),
-                $toggle = $that.parent(),
-                $contentToggle = $that.next(),
-                $accordion = $that.parents('.accordion');
+    //        // toggle mobile menu
+    //        toggleMenu: function () {
 
-            if ( $accordion.length > 0 ) {
-                $accordion.find('.content-toggle').slideUp('normal', function(){
-                    $(this).parent().removeClass('open');
-                });
-                if ( $that.next().is(':hidden') ) {
-                    $contentToggle.slideDown('normal', function(){
-                        $toggle.addClass('open');
-                    });
-                }
-            } else {
-                $contentToggle.slideToggle('normal', function(){
-                    $toggle.toggleClass('open');
-                });
-            }
-        });
+    //            var self = this,
+    //                $body = $('body');
 
-    },
+    //            $('#nav-toggle').click(function (e) {
+    //                e.preventDefault();
 
-    /*-------------------------------------------------------------------*/
-    /*      Tabs
-    /*-------------------------------------------------------------------*/
+    //                if ($body.hasClass('open')) {
+    //                    $body.removeClass('open');
+    //                    $('#nav-menu').find('li').removeClass('show');
+    //                } else {
+    //                    $body.addClass('open');
+    //                    self.showSubmenu();
+    //                }
 
-    THE_TATTOOIST.tabs = function(){
+    //            });
 
-        $('.title-tab:first-child').addClass('selected-tab');
-        $('.title-tab').on('click',function(e){
-            e.preventDefault();
+    //        },
 
-            var $that = $(this),
-                $tabParent = $that.parents('.tabs'),
-                idTab = $that.find('a').attr('href');
+    //        // add 'parent' class if a list item contains another list
+    //        addClassParent: function () {
 
-            if ( ! $that.hasClass('selected-tab') ) {
-                $tabParent.find('.tab').hide().removeClass('open');
-                $tabParent.find('.title-tab').removeClass('selected-tab');
-                $that.addClass('selected-tab');
-                $(idTab).fadeIn().addClass('open');
-            }
+    //            $('#nav-menu').find('li > ul').each(function () {
+    //                $(this).parent().addClass('parent');
+    //            });
 
-        });
+    //        },
 
-    },
+    //        // add/remove classes to a certain window width
+    //        addRemoveClasses: function () {
 
-    /*-------------------------------------------------------------------*/
-    /*      Portfolio Layout
-    /*-------------------------------------------------------------------*/
+    //            var $nav = $('#nav-menu');
 
-    THE_TATTOOIST.portfolio = {
+    //            if ($(window).width() < 992) {
+    //                $nav.addClass('mobile');
+    //            } else {
+    //                $('body').removeClass('open');
+    //                $nav.removeClass('mobile').find('li').removeClass('show');
+    //            }
 
-        init : function(){
+    //        },
 
-            this.layout();
-            this.filters();
-            this.infoItems();
+    //        // show sub menu
+    //        showSubmenu: function () {
 
-        },
+    //            $('#nav-menu').find('a').each(function () {
 
-        // build the portfolio layout
-        layout : function(){
+    //                var $that = $(this);
 
-            $('.works').imagesLoaded( function() {
-                $('.works').isotope();
-            });
+    //                if ($that.next('ul').length) {
+    //                    $that.one('click', function (e) {
+    //                        e.preventDefault();
+    //                        $(this).parent().addClass('show');
+    //                    });
+    //                }
 
-        },
+    //            });
 
-        // filter items on button click
-        filters : function(){
+    //        }
 
-            $('.filters').on( 'click', 'a', function(e) {
-                e.preventDefault();
-
-                var $that = $(this),
-                    filterValue = $that.attr('data-filter');
-
-                $('.filters a').removeClass('light');
-                $that.addClass('light');
-                $('.works').isotope({ filter: filterValue });
-            });
-
-        },
-
-        // open/close portfolio item information
-        infoItems : function(){
-
-            $('.info-link').on('click',function(e){
-                e.preventDefault();
-
-                var $that = $(this),
-                    $extraItem = $that.parents('.work-thumb').next('.info-work');
-
-                if ($extraItem.length > 0) {
-                    $extraItem.slideToggle( 200, function(){
-                        $(this).parents('.work').toggleClass('opened');
-                        $('.works').isotope('layout');
-                    });
-                }
-
-            });
-
-        }
-
-    },
-
-    /*-------------------------------------------------------------------*/
-    /*      Scroll to Section (One Page Version)
-    /*-------------------------------------------------------------------*/
-
-    THE_TATTOOIST.scrollToSection = function(){
-
-        $('.one-page #nav-menu a[href^="#"]').on('click',function (e) {
-            e.preventDefault();
-
-            var target = this.hash,
-                $section = $(target);
-
-            $(this).parent().addClass('selected');
-            $('html, body').stop().animate({
-                scrollTop: $section.offset().top - 79
-            }, 900, 'swing', function () {
-                window.location.hash = target;
-            });
-            $('body').removeClass('open');
-            $('#nav-menu').find('li').removeClass('show');
-
-        });
-
-    },
-
-    /*-------------------------------------------------------------------*/
-    /*      Highlight Navigation Link When Scrolling (One Page Version)
-    /*-------------------------------------------------------------------*/
-
-    THE_TATTOOIST.scrollHighlight = function(){
-
-        var scrollPosition = $(window).scrollTop();
-
-        if ( $('body').hasClass('one-page') ) {
-
-            if (scrollPosition >= 200) {
-
-                $('.section').each(function() {
-
-                    var $link = $('#nav-menu a[href="#' + $(this).attr('id') +'"');
-                    if ( $link.length && $(this).position().top <= scrollPosition + 80) {
-                        $('#nav-menu li').removeClass('selected');
-                        $link.parent().addClass('selected');
-                    }
-                });
-
-            } else {
-
-                $('#nav-menu li').removeClass('selected');
-
-            }
-        }
-
-    },
-
-    /*-------------------------------------------------------------------*/
-    /*      Mobile Menu
-    /*-------------------------------------------------------------------*/
-
-    THE_TATTOOIST.mobileMenu = {
-
-        init : function(){
-
-            this.toggleMenu();
-            this.addClassParent();
-            this.addRemoveClasses();
-
-        },
-
-        // toggle mobile menu
-        toggleMenu : function() {
-
-            var self = this,
-                $body = $('body');
-
-            $('#nav-toggle').click(function(e){
-                e.preventDefault();
-
-                if ( $body.hasClass('open') ) {
-                    $body.removeClass('open');
-                    $('#nav-menu').find('li').removeClass('show');
-                } else {
-                    $body.addClass('open');
-                    self.showSubmenu();
-                }
-
-            });
-
-        },
-
-        // add 'parent' class if a list item contains another list
-        addClassParent : function() {
-
-            $('#nav-menu').find('li > ul').each(function(){
-                $(this).parent().addClass('parent');
-            });
-
-        },
-
-        // add/remove classes to a certain window width
-        addRemoveClasses : function() {
-
-            var $nav = $('#nav-menu');
-
-            if ( $(window).width() < 992 ) {
-                $nav.addClass('mobile');
-            } else {
-                $('body').removeClass('open');
-                $nav.removeClass('mobile').find('li').removeClass('show');
-            }
-
-        },
-
-        // show sub menu
-        showSubmenu : function() {
-
-            $('#nav-menu').find('a').each(function(){
-
-                var $that = $(this);
-
-                if ( $that.next('ul').length ) {
-                    $that.one('click', function(e) {
-                        e.preventDefault();
-                        $(this).parent().addClass('show');
-                    });
-                }
-
-            });
-
-        }
-
-    },
+    //    },
 
     /*-------------------------------------------------------------------*/
     /*      Sticky Menu
     /*-------------------------------------------------------------------*/
 
-    THE_TATTOOIST.stickyMenu = function(){
+    THE_TATTOOIST.stickyMenu = function () {
 
         if ($(window).scrollTop() > 50) {
-            $('body').addClass('sticky');
+            $('nav').addClass('bg-dark');
         } else {
-            $('body').removeClass('sticky');
-
+            $('nav').removeClass('bg-dark');
         }
 
     },
 
-    /*-------------------------------------------------------------------*/
-    /*      Show/Hide Bottom Contacts Bar
-    /*-------------------------------------------------------------------*/
-
-    THE_TATTOOIST.contactsBar = function(){
-
-        if ($(window).scrollTop() + $(window).height() > $('footer').offset().top) {
-            $('#contacts-bar').fadeOut('fast');
-        } else {
-            $('#contacts-bar').fadeIn('fast');
-        }
-
-    },
-
-    /*-------------------------------------------------------------------*/
-    /*      Custom Backgrounds
-    /*-------------------------------------------------------------------*/
-
-    THE_TATTOOIST.backgrounds = function(){
-
-        $.each( config.backgrouns, function( key, value ) {
-
-            var $el = $(key),
-                $overlay = $('<div class="bg-overlay"></div>');
-
-            if ( value.img != null ) {
-                $el.addClass('bg').css('background-image', 'url(' + value.img + ')').prepend($overlay);
-            }
-
-            if ( value.overlay != null && !value.disableOverlay ) {
-                $el.find('.bg-overlay').remove();
-            }
-
-            if ( value.overlayOpacity != null ) {
-                $el.find('.bg-overlay').css('opacity', value.overlayOpacity);
-            }
-
-            if ( value.overlayColor != null ) {
-                $el.find('.bg-overlay').css('background-color', value.overlayColor);
-            }
-
-            if ( value.pattern != null && value.pattern ) {
-                $el.addClass('pattern');
-            }
-
-            if ( value.position != null ) {
-               $el.css('background-position', value.position);
-            }
-
-            if ( value.bgCover != null ) {
-                $el.css('background-size', value.bgCover);
-            }
-
-            if ( value.parallax != null && value.parallax ) {
-                $el.addClass('plx');
-            }
-
-        });
-
-    },
-
-    /*-------------------------------------------------------------------*/
-    /*      Parallax
-    /*-------------------------------------------------------------------*/
-
-    THE_TATTOOIST.parallax = function(){
-
-        $('.plx').each(function() {
-            $(this).parallax('50%', 0.5);
-        });
-
-    },
-
-    /*-------------------------------------------------------------------*/
-    /*      Flexslider
-    /*-------------------------------------------------------------------*/
-
-    THE_TATTOOIST.flexslider = function(){
-
-        $('.flexslider').each(function(){
-            var $that = $(this),
-                animationType = ( typeof $that.data('animation') !== 'undefined' ) ? $that.data('animation') : 'slide',
-                autoplay = ( typeof $that.data('autoplay') !== 'undefined' ) ? $that.data('autoplay') : false;
-
-            $that.flexslider({
-                slideshow : autoplay,
-                pauseOnHover : true,
-                animation : animationType,
-                prevText: '',
-                nextText: '',
-            });
-        });
-
-    },
-
-    /*-------------------------------------------------------------------*/
-    /*      Forms
-    /*          1. Email Validator Function
-    /*          2. Form Processor
-    /*          3. Close Form Message
-    /*-------------------------------------------------------------------*/
-
-    THE_TATTOOIST.forms = function(){
-
-        /* 1. Email validator
         /*-------------------------------------------------------------------*/
-        var emailValidator = function(email){
+        /*      Show/Hide Bottom Contacts Bar
+        /*-------------------------------------------------------------------*/
 
-            var emailReg = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-            var valid = emailReg.test(email);
+        THE_TATTOOIST.contactsBar = function () {
 
-            return valid;
-        };
+            if ($(window).scrollTop() + $(window).height() > $('footer').offset().top) {
+                $('#contacts-bar').fadeOut('fast');
+            } else {
+                $('#contacts-bar').fadeIn('fast');
+            }
 
-        /* 2. Form Processor
-        -------------------------------------------------------------------*/
-        // Add form message container
-        $('form').append('<div class="form-msg" style="display:none"><span></span><a href="#"></a></div>');
+        },
 
-        $('form').submit(function(e){
-            e.preventDefault();
+        /*-------------------------------------------------------------------*/
+        /*      Custom Backgrounds
+        /*-------------------------------------------------------------------*/
 
-            var $that = $(this),
-                checkEmpty = false,
-                formMessages = config.formMessages,
-                $msgForm = $that.find('.form-msg'),
-                $msgText = $msgForm.find('span'),
-                emailField = $that.find('input[name="email"]').val(),
-                postData = $that.serialize();
+        THE_TATTOOIST.backgrounds = function () {
 
-            $msgForm.removeClass('fail success');
-            $msgText.text('');
+            $.each(config.backgrouns, function (key, value) {
 
-            // Check if all fields are not empty
-            $that.find('.required').each(function() {
-                if($.trim($(this).val()) === '' || $(this).is(':checkbox:not(:checked)') ) {
-                    checkEmpty = true;
+                var $el = $(key),
+                    $overlay = $('<div class="bg-overlay"></div>');
+
+                if (value.img != null) {
+                    $el.addClass('bg').css('background-image', 'url(' + value.img + ')').prepend($overlay);
                 }
+
+                if (value.overlay != null && !value.disableOverlay) {
+                    $el.find('.bg-overlay').remove();
+                }
+
+                if (value.overlayOpacity != null) {
+                    $el.find('.bg-overlay').css('opacity', value.overlayOpacity);
+                }
+
+                if (value.overlayColor != null) {
+                    $el.find('.bg-overlay').css('background-color', value.overlayColor);
+                }
+
+                if (value.pattern != null && value.pattern) {
+                    $el.addClass('pattern');
+                }
+
+                if (value.position != null) {
+                    $el.css('background-position', value.position);
+                }
+
+                if (value.bgCover != null) {
+                    $el.css('background-size', value.bgCover);
+                }
+
+                if (value.parallax != null && value.parallax) {
+                    $el.addClass('plx');
+                }
+
             });
 
-            // Stop all if there is at least one empty field
-            if ( checkEmpty ) {
-                $msgText.text(formMessages.emptyFields).parent().addClass('fail').fadeIn('fast');
-                return false;
-            }
+        },
 
-            // Check if the email is valid. Otherwise stop all
-            if ( ! emailValidator(emailField) ) {
-                $msgText.text(formMessages.failEmail).parent().addClass('fail').fadeIn('fast');
-                return false;
-            }
+        /*-------------------------------------------------------------------*/
+        /*      Parallax
+        /*-------------------------------------------------------------------*/
 
-            $that.find('.submit').after('<span class="form-loader" />');
+        THE_TATTOOIST.parallax = function () {
 
-            // Send data to the corresponding processing file
-            $.post($that.attr('action'), postData, function(result){
-                if (result == 'success') {
-                    $msgText.text(formMessages.sent);               // success
-                    $that.trigger('reset');                         // reset all form fields
-                } else {
-                    $msgText.text(formMessages.fail);               // fail
-                }
-            }).fail(function() {
-                $msgText.text(formMessages.fail);                   // fail (problem with sending data)
-            }).always(function(result) {
-                $that.find('.form-loader').remove();
-                $msgForm.addClass(result).fadeIn('fast');           // show form message
+            $('.plx').each(function () {
+                $(this).parallax('50%', 0.5);
             });
 
+        },
+
+        /*-------------------------------------------------------------------*/
+        /*      Initialize all functions
+        /*-------------------------------------------------------------------*/
+
+        $(document).ready(function () {
+
+            THE_TATTOOIST.selectReplacer();
+            THE_TATTOOIST.toggle();
+            THE_TATTOOIST.tabs();
+            THE_TATTOOIST.portfolio.init();
+            THE_TATTOOIST.scrollToSection();
+            THE_TATTOOIST.mobileMenu.init();
+            THE_TATTOOIST.forms();
+            THE_TATTOOIST.backgrounds();
+            THE_TATTOOIST.parallax();
+
         });
-
-        /* 3. Close form messages
-        -------------------------------------------------------------------*/
-        $(document).on('click','.form-msg a', function(){
-
-            $(this).parent().fadeOut();
-
-            if ( $('.form-msg').hasClass('success') ) {
-                $.magnificPopup.close();
-            }
-
-            return false;
-        });
-
-    };
-
-    /*-------------------------------------------------------------------*/
-    /*      Initialize all functions
-    /*-------------------------------------------------------------------*/
-
-    $(document).ready(function(){
-
-        THE_TATTOOIST.magnificPopup();
-        THE_TATTOOIST.selectReplacer();
-        THE_TATTOOIST.toggle();
-        THE_TATTOOIST.tabs();
-        THE_TATTOOIST.portfolio.init();
-        THE_TATTOOIST.scrollToSection();
-        THE_TATTOOIST.mobileMenu.init();
-        THE_TATTOOIST.forms();
-        THE_TATTOOIST.backgrounds();
-        THE_TATTOOIST.parallax();
-
-    });
 
     // window load scripts
-    $(window).load(function() {
+    $(window).load(function () {
 
         THE_TATTOOIST.pageLoader();
         THE_TATTOOIST.flexslider();
@@ -571,7 +283,7 @@
     });
 
     // window resize scripts
-    $(window).resize(function() {
+    $(window).resize(function () {
 
         THE_TATTOOIST.portfolio.layout();
         THE_TATTOOIST.mobileMenu.addRemoveClasses();
@@ -579,7 +291,7 @@
     });
 
     // window scroll scripts
-    $(window).scroll(function() {
+    $(window).scroll(function () {
 
         THE_TATTOOIST.stickyMenu();
         THE_TATTOOIST.scrollHighlight();
@@ -587,4 +299,4 @@
 
     });
 
-} )( jQuery );
+})(jQuery);

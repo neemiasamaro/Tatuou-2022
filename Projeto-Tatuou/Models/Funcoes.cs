@@ -47,8 +47,8 @@ namespace WebApplication1.Models
                 mensagem.Priority = MailPriority.Normal;
                 //Cria o objeto que envia o e-mail
                 SmtpClient cliente = new SmtpClient();
-                cliente.UseDefaultCredentials = false;
-                cliente.Credentials = new NetworkCredential("tatuouadm@gmail.com", "SenhaTatuou71");
+                //cliente.UseDefaultCredentials = false;
+                //cliente.Credentials = new NetworkCredential("tatuouadm@gmail.com", "lnvopnaugafdedyw");
                 //Envia o email
                 cliente.Send(mensagem);
                 return "success|E-mail enviado com sucesso";
@@ -130,8 +130,8 @@ namespace WebApplication1.Models
                     string diretorio = HttpContext.Current.Request.PhysicalApplicationPath + "Uploads\\" + id + "\\" + nome;
                     if (tamanho > permitido)
                         return "Tamanho Máximo permitido é de " + permitido + " kb!";
-                    else if ((extensao != ".png" && extensao != ".jpg"))
-                        return "Extensão inválida, só são permitidas .png e .jpg!";
+                    else if ((extensao != ".png" && extensao != ".jpg" && extensao != ".jpeg"))
+                        return "Extensão inválida, só são permitidas .png, .jpg e .jpeg!";
                     else
                     {
                         flpUpload.SaveAs(diretorio);
@@ -147,17 +147,17 @@ namespace WebApplication1.Models
         {
             try
             {
-                double permitido = 900;
+                double permitido = 5000;
                 if (flpUpload != null)
                 {
                     string arq = Path.GetFileName(flpUpload.FileName);
                     double tamanho = Convert.ToDouble(flpUpload.ContentLength) / 1024;
                     string extensao = Path.GetExtension(flpUpload.FileName).ToLower();
-                    string diretorio = HttpContext.Current.Request.PhysicalApplicationPath + "Uploads\\" + id + "\\Porftolio\\" + nome;
+                    string diretorio = HttpContext.Current.Request.PhysicalApplicationPath + "Uploads\\" + id + "\\Portfolio\\" + nome;
                     if (tamanho > permitido)
                         return "Tamanho Máximo permitido é de " + permitido + " kb!";
-                    else if ((extensao != ".png" && extensao != ".jpg"))
-                        return "Extensão inválida, só são permitidas .png e .jpg!";
+                    else if ((extensao != ".png" && extensao != ".jpg" && extensao != ".jpeg"))
+                        return "Extensão inválida, só são permitidas .png, .jpg e jpeg!";
                     else
                     {
                         flpUpload.SaveAs(diretorio);

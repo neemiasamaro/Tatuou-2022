@@ -14,5 +14,9 @@ namespace WebApplication1.Models
         public virtual Estudio Estudio { get; set; }
         [MaxLength(100)]
         public string Imagem { get; set; }
+
+        //[Required]
+        //[MaxLength(255)]
+        //public string Descricao { get; set; }
     }
 }

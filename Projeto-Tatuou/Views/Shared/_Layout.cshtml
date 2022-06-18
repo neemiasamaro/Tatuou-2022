@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
@@ -7,73 +7,76 @@
     <title>Tatuou</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="~/Content/main.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/main.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css" />
 </head>
 <body>
-    <header id="master-header">
-        <div class="top-header">
+    <header>
+        <nav class="navbar fixed-top navbar-expand-md navbar-dark py-3">
             <div class="container">
-                <h1 id="logo">
-                    <a href=@Url.Action("Index","Home")>
-                        <img src="~/images/logo.png" alt="Tatuou">
-                    </a>
-                </h1>
-                <!-- ============ Main Navigation - START ============ -->
-                <a id="nav-toggle" href="#"><span></span></a>
-                <nav id="nav-menu">
-                    <ul>
+                <a class="navbar-brand" href=@Url.Action("Index","Home")>
+                    <img src="~/images/logo.png" alt="Tatuou" class="logo img-fluid">
+                </a>
+                <button class="navbar-toggler" id="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+                    <ul class="navbar-nav ml-auto my-auto">
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (Convert.ToInt32(User.Identity.Name.Split('|')[2]) == 1)
                             {
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Create","Estilos")" class="nav-link">Cadastrar Estilos</a>
+                                <li class="nav-item mx-3">
+                                    <a href="@Url.Action("Index","Estilos")" class="nav-link mx-2">Estilos</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Index","Estilos")" class="nav-link">Lista de Estilos</a>
+                                <li class="nav-item mx-3">
+                                    <a href="@Url.Action("Estudios","Estudios")" class="nav-link mx-2">Estúdios</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Estudios","Estudios")" class="nav-link">Lista de Estúdios</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Sair", "Home")" class="nav-link">@User.Identity.Name.Split('|')[1] - Sair</a>
+                                <li class="nav-item mx-3">
+                                    <a href="@Url.Action("Sair", "Home")" class="nav-link mx-2">@User.Identity.Name.Split('|')[1] - Sair</a>
                                 </li>
                             }
                         }
                         else
                         {
-                            <li class="nav-item"><a href="@Url.Action("Estilos", "Estilos")" class="nav-link">Estilos</a></li>
-                            <li class="nav-item"><a href="@Url.Action("Index", "Estudios")" class="nav-link">Estudios</a></li>
+                            <li class="nav-item mx-3">
+                                <a href="@Url.Action("Estilos", "Estilos")" class="nav-link mx-2">Estilos</a>
+                            </li>
+                            <li class="nav-item mx-3">
+                                <a href="@Url.Action("Index", "Estudios")" class="nav-link mx-2">Estudios</a>
+                            </li>
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (Convert.ToInt32(User.Identity.Name.Split('|')[2]) == 2)
                             {
-                                <li class="nav-item">
-                                    <a href="~/Estudios/MeuPerfil/@User.Identity.Name.Split('|')[0]" class="nav-link" alt="Meu Perfil">@User.Identity.Name.Split('|')[1]</a>
+                                <li class="nav-item mx-3">
+                                    <a href="@Url.Action("CadastroEstilos", "Estudios", new { @id = Convert.ToInt32(User.Identity.Name.Split('|')[0]) })" class="nav-link mx-2" alt="Meu Estilos">Meus Estilos</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Sair", "Home")" class="nav-link">Sair</a>
+                                <li class="nav-item mx-3">
+                                    <a href="@Url.Action("MeuPerfil","Estudios",new { @id = Convert.ToInt32(User.Identity.Name.Split('|')[0])})" class="nav-link mx-2" alt="Meu Perfil">@User.Identity.Name.Split('|')[1]</a>
+                                </li>
+                                <li class="nav-item mx-3">
+                                    <a href="@Url.Action("Sair", "Home")" class="nav-link mx-2">Sair</a>
                                 </li>
                             }
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a href="@Url.Action("Login","Home")" class="nav-link">
-                                     Entrar
+                                <a href="@Url.Action("Login","Home")" class="nav-link mx-4">
+                                    Entrar
                                 </a>
                             </li>
                         }
                     </ul>
-                </nav>
+                </div>
             </div>
-        </div>
+        </nav>
     </header>
     <main class="container-fluid p-0">
         @RenderBody()
@@ -88,14 +91,14 @@
                 </div>
                 <div class="footer-col footer-contacts col-md-4">
                     <div class="contact-item"><strong>Entre em contato conosco ou visite nossas redes sociais</strong></div>
-                    <div class="contact-item"><span>Telefone:</span> <strong>(12) 99634-4685</strong></div>
-                    <div class="contact-item"><span>Email:</span> <strong><a href="#">tatuou@gmail.com</a></strong></div>
+                    <div class="contact-item"><span>Telefone:</span> <strong>(12) 99100-2326</strong></div>
+                    <div class="contact-item"><span>Email:</span> <strong><a href="mailto:tatuouadm@gmail.com">tatuouadm@gmail.com</a></strong></div>
                     <div class="contact-item">
                         <span>Nossas redes sociais:</span>
                         <ul class="social-links">
-                            <li><a title="Facebook" href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                            <li><a title="Twitter" href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                            <li><a title="Instagram" href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                            <li><a title="Facebook" href="https://www.facebook.com/" target="_blank"><i class="bi bi-facebook"></i></a></li>
+                            <li><a title="Twitter" href="https://twitter.com/" target="_blank"><i class="bi bi-twitter"></i></a></li>
+                            <li><a title="Instagram" href="https://www.instagram.com/" target="_blank"><i class="bi bi-instagram"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -115,8 +118,11 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     @RenderSection("scripts", required: false)
-    <script src="https://cdn.tiny.cloud/1/no-apikey/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.mask.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/main.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
     @if (TempData["MSG"] != null)
     {
         <script>
@@ -140,10 +146,7 @@
                 });
         </script>
     }
-    <script src="~/Scripts/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/pt-br.js"></script>
     <script src="~/Scripts/main2.js"></script>
-    <script src="~/Scripts/common.js"></script>
 </body>
 </html>

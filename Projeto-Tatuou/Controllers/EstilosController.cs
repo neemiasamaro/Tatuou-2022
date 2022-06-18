@@ -25,7 +25,7 @@ namespace Projeto_Tatuou.Controllers
         [AllowAnonymous]
         public ActionResult Estilos()
         {
-            return View(db.Estilos.Where(p => p.Status == true).ToList());
+            return View(db.Estilos.Where(p => p.Status == true).OrderBy(p => p.Nome).ToList());
         }
 
         // GET: Estilos/Create

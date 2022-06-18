@@ -7,22 +7,20 @@
 <section class="section cta dark">
     <div class="container" style="margin-top: 5rem;">
         <div class="row">
-            <div class="col-12">
-                <div class="card py-5 px-5">
+            <div class="col-md-12">
+                <div class="card py-5 px-5 text-center">
                     <h4 class="display-4" style="color:black;">Listagem de Estilos</h4>
-                    <table class="table table-bordered">
+                    <a href="@Url.Action("Create","Estilos")"class="col-md-6 offset-md-3 btn btn-block mt-3">Cadastrar Estilos</a>
+                    <table class="table table-striped table-responsive">
                         <thead>
                             <tr>
-                                <th width="20%">
+                                <th width="30%">
                                     Nome
                                 </th>
-                                <th width="50%">
-                                    Descrição
-                                </th>
-                                <th width="15%">
+                                <th width="10%">
                                     Disponível
                                 </th>
-                                <th width="15%">
+                                <th width="30%">
                                     Ações
                                 </th>
                             </tr>
@@ -33,9 +31,6 @@
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Nome)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Descricao)
                                     </td>
                                     <td>
                                         @if (item.Status == false)

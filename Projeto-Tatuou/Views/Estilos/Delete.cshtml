@@ -13,22 +13,21 @@
         </h2>
         <div class="form-horizontal">
             <div class="row">
-                <div class="form-outline col-4">
+                <div class="form-outline col-md-4 col-sm-12">
                     @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @disabled = "disable" } })
                 </div>
-                <div class=" form-outline col-8">
+                <div class="form-outline col-md-8 col-sm-12">
                     @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control", @disabled = "disable" } })
                 </div>
-
             </div>
         </div>
 
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            <input type="submit" value="Delete" class="btn btn-block" />
+            <input type="submit" value="Sim" class="btn btn-block" />
             <a href="@Url.Action("Index")" class="btn">Voltar</a>
         }
     </div>

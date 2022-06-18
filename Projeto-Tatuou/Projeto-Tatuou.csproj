@@ -178,9 +178,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202206072111023_Banco.cs" />
-    <Compile Include="Migrations\202206072111023_Banco.designer.cs">
-      <DependentUpon>202206072111023_Banco.cs</DependentUpon>
+    <Compile Include="Migrations\202206161053558_Banco.cs" />
+    <Compile Include="Migrations\202206161053558_Banco.designer.cs">
+      <DependentUpon>202206161053558_Banco.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexto.cs" />
@@ -191,24 +191,30 @@
     <Compile Include="Models\Perfil.cs" />
     <Compile Include="Models\Portfolio.cs" />
     <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\UsuarioPerfil.cs" />
     <Compile Include="Models\VMEstudio.cs" />
     <Compile Include="Models\VMUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Forms.css" />
     <Content Include="Content\Index.css" />
     <Content Include="Content\Login.css" />
+    <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\main.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\logo.png" />
     <Content Include="images\user.png" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\confirmador.js" />
+    <Content Include="Scripts\jquery.magnific-popup.js" />
+    <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\main2.js" />
     <Content Include="Scripts\pt-br.js" />
     <Content Include="Uploads\user.png" />
     <Content Include="Web.config">
@@ -229,13 +235,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Estudios\Cadastro.cshtml" />
     <Content Include="Views\Home\Cadastro.cshtml" />
-    <Content Include="Views\Home\Email.cshtml" />
     <Content Include="Views\Home\EsqueceuSenha.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Redefinir.cshtml" />
     <Content Include="Views\Estilos\Create.cshtml" />
     <Content Include="Views\Estilos\Delete.cshtml" />
-    <Content Include="Views\Estilos\Details.cshtml" />
     <Content Include="Views\Estilos\Edit.cshtml" />
     <Content Include="Views\Estilos\Index.cshtml" />
     <Content Include="Views\Estudios\MeuPerfil.cshtml" />
@@ -246,21 +250,17 @@
     <Folder Include="images\estilos\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
     <Content Include="Views\Estilos\Estilos.cshtml" />
     <Content Include="Views\Estudios\CadastroEstilos.cshtml" />
     <Content Include="Views\Estudios\Perfil.cshtml" />
     <Content Include="Views\Estudios\EditarEstudios.cshtml" />
     <Content Include="Views\Estudios\Estudios.cshtml" />
-    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Estudios\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202206072111023_Banco.resx">
-      <DependentUpon>202206072111023_Banco.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202206161053558_Banco.resx">
+      <DependentUpon>202206161053558_Banco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

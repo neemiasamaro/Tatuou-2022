@@ -1,43 +1,53 @@
 ﻿@model WebApplication1.Models.Estudio
 
-<section id="page-artist">
+<section id="page-artist" style="overflow-x:hidden;">
     <div class="wrapper">
         <header id="master-header">
             <h2 id="page-title">@Html.DisplayFor(model => model.nomeEstudio)</h2>
             <div class="header-meta artist-role">@Html.DisplayFor(model => model.Logradouro) @Html.DisplayFor(model => model.Numero), @Html.DisplayFor(model => model.Bairro) - @Html.DisplayFor(model => model.Cidade) @Html.DisplayFor(model => model.Estado)</div> <br />
-
+            <a class="btn md btn-popup" href="https://web.whatsapp.com/send?phone=55 @Html.DisplayFor(model => model.Whatsapp)" target="_blank"><i class="bi bi-whatsapp"></i>Agendar um horário</a>
         </header>
-
         <div id="main">
-
-            <div class="section">
+            <div class="section mb-5">
                 <div class="content container">
                     <div class="full row">
-                        <div class="col-md-12">
+                        <div class="col-md-6 offset-md-3 mb-5 pb-5">
+                            @if (ViewBag.Aprovado != "")
+                            {
+                                <h3 class="text-danger text-center">*@ViewBag.Aprovado*</h3>
+                            }
                             <a title="Editar" href="~/Estudios/Editar/@Html.DisplayFor(model => model.Id)" class="btn btn-block">
                                 Editar
                             </a>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-6">
+                            <h4>Bio</h4>
                             <p>@Html.DisplayFor(model => model.Bio)</p>
                             <h4>Minhas redes sociais!</h4>
                             <ul class="social-links">
-                                <li><a title="Facebook" href="@Html.DisplayFor(model => model.Facebook)" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                <li><a title="Twitter" href="@Html.DisplayFor(model => model.Twitter)" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                                <li><a title="Instagram" href="@Html.DisplayFor(model => model.Instagram)" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                                <li><a title="LinkedIn" href="@Html.DisplayFor(model => model.Linkedin)" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a title="Whatsapp" href="@Html.DisplayFor(model => model.Whatsapp)" target="_blank"><i class="fa fa-whatsapp"></i></a></li>
+                                <li><a title="Facebook" href="@Html.DisplayFor(model => model.Facebook)" target="_blank"><i class="bi bi-facebook"></i></a></li>
+                                <li><a title="Twitter" href="@Html.DisplayFor(model => model.Twitter)" target="_blank"><i class="bi bi-twitter"></i></a></li>
+                                <li><a title="Instagram" href="@Html.DisplayFor(model => model.Instagram)" target="_blank"><i class="bi bi-instagram"></i></a></li>
+                                <li><a title="LinkedIn" href="@Html.DisplayFor(model => model.Linkedin)" target="_blank"><i class="bi bi-linkedin"></i></a></li>
                             </ul>
                             <h3 class="focus-title">Meus estilos</h3>
-                            <ul class="icon-list">
-                                <li><i class="fa fa-star"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
-                                <li><i class="fa fa-star"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
-                                <li><i class="fa fa-star"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
-                            </ul>
+                            @if (Model.EstudioEstilos.Count == 0)
+                            {
+                                <h5><strong>Sem estilos cadastrados!</strong></h5>
+                                <h6>Para adicionar os estilos que seu estúdio realiza,<br />clique <a href="@Url.Action("CadastroEstilos", "Estudios", new { @id = Convert.ToInt32(User.Identity.Name.Split('|')[0]) })">'aqui'</a>, ou em 'Meus Estilos'.</h6>
+                            }
+                            else
+                            {
+                                <ul class="icon-list">
+                                    @foreach (var item in Model.EstudioEstilos)
+                                    {
+                                        <li><i class="bi bi-arrow-right"></i>@item.Estilo.Nome</li>
+                                    }
+                                </ul>
+                            }
                         </div>
-                        <div class="col-md-6">
-                            <img src="~/Uploads/@Html.DisplayFor(model => model.Id)/@Html.DisplayFor(model => model.Foto)?@DateTime.Now.ToString(" yyyyMMddHHmmss")" />
-
+                        <div class="col-6 perfil-div text-center">
+                            <img src="~/@Html.DisplayFor(model => model.Foto)" class="perfil-foto img-fluid" alt="...">
                         </div>
                     </div>
                 </div>
@@ -47,75 +57,79 @@
                 <div class="section-title">
                     <h2>Portfólio</h2>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 offset-3">
-                        @if (Model.Portfolio.Count < 5)
+                <div class="content container">
+                    <div class="works row">
+                        @foreach (var item in Model.Portfolio)
                         {
-                        using (Html.BeginForm("Portfolio", "Estudios", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                        @Html.AntiForgeryToken()
-                        <div class="form-horizontal">
-                            <h3 class="mb-5 text-center display-4"><strong>Upload de Portfolio</strong></h3>
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="row">
-                                <div class="col-6 offset-3">
-                                    <input type="hidden" value="@Model.Id" name="id" />
-                                    <input type="hidden" value="@Model.UsuarioId" name="idusu" />
-                                    <input type="file" multiple="multiple" name="arquivos" />
-                                    <input type="submit" class="btn btn-block" />
-
+                            <div class="work col-md-2 col-sm-12 ">
+                                <div class="work-thumb">
+                                    <img src="~/Uploads/@Model.Id/Portfolio/@item.Imagem" alt="Work 01">
+                                    <div class="thumb-links">
+                                        <a class="zoom" href="~/Uploads/@Model.Id/Portfolio/@item.Imagem"></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        }
                         }
                     </div>
-                    <div class="content container">
-                        <div class="works">
-                            @foreach (var item in Model.Portfolio)
+                </div>
+                <div class="row">
+                    <div class="col-4 offset-4">
+                        <h2 class="mb-5 text-center text-uppercase">Upload de Portfólio</h2>
+                        @if (Model.Portfolio.Count < 5)
+                        {
+                            using (Html.BeginForm("Portfolio", "Estudios", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
-                                <div class="work col-md-2 col-sm-6">
-                                    <div class="work-thumb">
-                                        <img src="~/Uploads/@Model.Id/Portfolio/@item.Imagem" alt="Work 01">
-                                        <div class="thumb-links">
-                                            <a class="zoom" href="~/Uploads/@Model.Id/Portfolio/@item.Imagem"></a>
+                                @Html.AntiForgeryToken()
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="hidden" value="@Model.Id" name="id" />
+                                            <input type="hidden" value="@Model.UsuarioId" name="idusu" />
+                                            <div class="max-width text-center">
+                                                <img src="~/images/plus.png" alt="Selecione uma imagem" id="portfolioImg" title="Adicionar Imagem"/>
+                                                <input id="portfolioInput" type="file" multiple="multiple" name="arquivos" accept="image/*">
+                                                <input type="submit" class="btn btn-block mt-5" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <script>
+                                    'use strict'
+
+                                    var foto = document.getElementById('portfolioImg');
+                                    var arquivo = document.getElementById('portfolioInput');
+
+                                    foto.addEventListener('click', () => {
+                                        arquivo.click();
+                                    })
+
+                                    arquivo.addEventListener('change', (event) => {
+
+                                        if (arquivo.files.length <= 0) {
+                                            return;
+                                        }
+
+                                        var read = new FileReader();
+
+                                        read.onload = () => {
+                                            foto.src = read.result;
+                                        }
+
+                                        read.readAsDataURL(arquivo.files[0]);
+                                    });
+                                </script>
                             }
-                            <div class="work col-md-2 col-sm-6">
-                                <div class="work-thumb">
-                                    <img src="" alt="Work 01">
-                                    <div class="thumb-links">
-                                        <a class="zoom" href=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="work col-md-2 col-sm-6">
-                                <div class="work-thumb">
-                                    <img src="" alt="Work 01">
-                                    <div class="thumb-links">
-                                        <a class="zoom" href=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="work col-md-2 col-sm-6">
-                                <div class="work-thumb">
-                                    <img src="" alt="Work 01">
-                                    <div class="thumb-links">
-                                        <a class="zoom" href=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
+
                 </div>
-
-
-
                 <a class="instagram-bar" href="@Html.DisplayFor(model => model.Instagram)">Veja todos meus trabalhos no <strong>Instagram</strong>!</a>
-
             </div>
         </div>
     </div>
 </section>
+@section Scripts {
+    <script src="~/Scripts/main.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

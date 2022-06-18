@@ -16,17 +16,16 @@ namespace WebApplication1.Controllers
         //[Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            return View(db.Estilos.Where(p => p.Status == true).ToList());
-        }
-
-        public ActionResult Admin()
-        {
-            return View();
+            return View(db.Estilos.Where(p => p.Status == true).OrderBy(p => p.Nome).ToList());
         }
 
         [AllowAnonymous]
         public ActionResult Cadastro()
         {
+            if (User.Identity.IsAuthenticated == true)
+            {
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
@@ -39,15 +38,77 @@ namespace WebApplication1.Controllers
             {
                 if (db.Usuario.Where(x => x.Email == cad.Email).ToList().Count > 0)
                 {
-                    ModelState.AddModelError("", "E-mail já utilizado!");
-                    return View(cad);
+                    TempData["MSG"] = "warning|E-mail já utilizado";
+                    return RedirectToAction("Cadastro");
                 }
 
+                if(db.Usuario.Where(x => x.Cpf == cad.Cpf).ToList().Count > 0)
+                {
+                    TempData["MSG"] = "warning|CPF já utilizado";
+                    return RedirectToAction("Cadastro");
+                }
                 Usuario usu = new Usuario();
                 usu.Nome = cad.Nome;
                 usu.Email = cad.Email;
                 usu.Senha = Funcoes.HashTexto(cad.Senha, "SHA512");
-                usu.Cpf = cad.Cpf;
+
+                string num = cad.Cpf.Trim().Replace(".", "").Replace("-", "");
+                int[] result = new int[num.Length];
+                int soma;
+                for (int i = 0; i < num.Length; i++)
+                {
+                    result[i] = (num[i] + 2) / 1 % 10;
+                }
+
+                soma = 0;
+
+                soma += result[0] * 10;
+                soma += result[1] * 9;
+                soma += result[2] * 8;
+                soma += result[3] * 7;
+                soma += result[4] * 6;
+                soma += result[5] * 5;
+                soma += result[6] * 4;
+                soma += result[7] * 3;
+                soma += result[8] * 2;
+
+                soma = (soma * 10) % 11;
+                if (soma == 10 || soma == 11)
+                {
+                    soma = 0;
+                }
+                if (soma != result[9])
+                {
+                    TempData["MSG"] = "warning|CPF Inválido!";
+                    RedirectToAction("Cadastro");
+                }
+                soma = 0;
+                soma += result[0] * 11;
+                soma += result[1] * 10;
+                soma += result[2] * 9;
+                soma += result[3] * 8;
+                soma += result[4] * 7;
+                soma += result[5] * 6;
+                soma += result[6] * 5;
+                soma += result[7] * 4;
+                soma += result[8] * 3;
+                soma += result[9] * 2;
+
+                soma = (soma * 10) % 11;
+
+                if (soma == 10 || soma == 11)
+                {
+                    soma = 0;
+                }
+                if (soma != result[10])
+                {
+                    TempData["MSG"] = "warning|CPF Inválido!";
+                    return RedirectToAction("Cadastro");
+                }
+                else
+                {
+                    usu.Cpf = cad.Cpf;
+                }
                 usu.Status = true;
                 usu.Perfil = db.Perfil.Find(2);
                 if (usu.Perfil == null)
@@ -65,6 +126,10 @@ namespace WebApplication1.Controllers
 
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated == true)
+            {
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
@@ -204,8 +269,5 @@ namespace WebApplication1.Controllers
             TempData["MSG"] = "warning|Preencha todos os campos";
             return View(red);
         }
-
-
-
     }
 }

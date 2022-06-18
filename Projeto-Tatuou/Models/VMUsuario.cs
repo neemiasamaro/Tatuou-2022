@@ -10,6 +10,7 @@ namespace WebApplication1.Models
     {
         [Required]
         [MaxLength(255)]
+        [Display(Name = "Nome Completo")]
         public string Nome { get; set; }
 
         [Required]

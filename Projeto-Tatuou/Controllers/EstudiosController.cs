@@ -16,8 +16,6 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            //string sql = "select Nome from estilos A inner join estudioestiloes B on A.Id = B.EstilosId inner join estudios C on B.EstudioId = C.Id";
-            //ViewBag.Estudio = db.Estudio.SqlQuery(sql).Where(p => p.Disponivel == true).ToList();
             return View(db.Estudio.Where(p => p.Disponivel == true).ToList());
         }
 
@@ -45,7 +43,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Editar([Bind(Include = "Id,Bio,UsuarioId,Bairro,Logradouro,Complemento,Cidade,Estado,Facebook,Instagram,Linkedin,Twitter,Whatsapp,NomeEstudio,Cep,Numero,Cnpj,Disponivel,Foto")]Estudio estudio)
+        public ActionResult Editar([Bind(Include = "Id,Bio,UsuarioId,Bairro,Logradouro,Complemento,Cidade,Estado,Facebook,Instagram,Linkedin,Twitter,Whatsapp,NomeEstudio,Cep,Numero,Cnpj,Disponivel,Foto")] Estudio estudio)
         {
 
             if (ModelState.IsValid)
@@ -88,21 +86,34 @@ namespace WebApplication1.Controllers
 
         public ActionResult MeuPerfil(int? id)
         {
+            Estudio estudio;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estudio estudio = db.Estudio.Include(x=>x.Portfolio).Where(p => p.UsuarioId == id).ToList().FirstOrDefault();
-            var aprovado = db.Estudio.Where(p => p.Disponivel == true).ToList().FirstOrDefault();
-            if(aprovado != null)
+            else if (db.Estudio.Where(p => p.UsuarioId == id).ToList().FirstOrDefault() == null)
             {
-                TempData["MSG"] = "warning|Estúdio aguardando aprovação!";
+                return RedirectToAction("Cadastro", "Estudios", new { @id = User.Identity.Name.Split('|')[0] });
+            }
+            else
+            {
+               estudio = db.Estudio.Include(x => x.EstudioEstilos).Include(x => x.Portfolio).Where(p => p.UsuarioId == id).ToList().FirstOrDefault();
+            }
+
+            var aprovado = db.Estudio.Where(p => p.Disponivel == true).ToList().FirstOrDefault();
+            if (aprovado != null)
+            {
+                ViewBag.Aprovado = "Estúdio aguardando aprovação";
                 return View(estudio);
             }
-	        if (estudio == null)
+            ViewBag.Aprovado = "";
+            if (estudio == null)
             {
-                TempData["MSG"] = "error|Permissão negada para acesso a esta página";
-                return RedirectToAction("Index");
+                if (db.Estudio.Where(p => p.UsuarioId == id).ToList().FirstOrDefault().Equals(null) || db.Estudio.Where(p => p.UsuarioId == id).ToList().FirstOrDefault().Equals(0))
+                {
+                    TempData["MSG"] = "error|Permissão negada para acesso a esta página";
+                    return RedirectToAction("Cadastro");
+                }
             }
             return View(estudio);
         }
@@ -113,7 +124,7 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estudio estudio = db.Estudio.Where(p => p.Id == id).ToList().FirstOrDefault();
+            Estudio estudio = db.Estudio.Include(x => x.EstudioEstilos).Include(x => x.Portfolio).Where(p => p.Id == id).ToList().FirstOrDefault();
             if (estudio == null)
             {
                 return HttpNotFound();
@@ -128,10 +139,7 @@ namespace WebApplication1.Controllers
             Estudio estudio = db.Estudio.Where(p => p.UsuarioId == id).ToList().FirstOrDefault();
             if (estudio != null)
             {
-                CadastroEstudio cadastroEstudio = new CadastroEstudio();
-                cadastroEstudio.Id = estudio.Id;
-                cadastroEstudio.NomeEstudio = estudio.nomeEstudio;
-                return View(cadastroEstudio);
+                return RedirectToAction("MeuPerfil", "Estudios", new { @id = id });
             }
             return View();
         }
@@ -153,6 +161,7 @@ namespace WebApplication1.Controllers
                 {
                     estudio = new Estudio();
                 }
+
                 estudio.nomeEstudio = cad.NomeEstudio;
                 estudio.Cep = cad.Cep;
                 estudio.Cidade = cad.Cidade;
@@ -167,6 +176,7 @@ namespace WebApplication1.Controllers
                 estudio.Twitter = cad.Twitter;
                 estudio.Linkedin = cad.Linkedin;
                 estudio.Bio = cad.Bio;
+                estudio.Whatsapp = cad.Whatsapp.Replace("(", "").Replace(")", "").Replace(" ", "").Replace("-", "");
                 string cod_usu = User.Identity.Name.Split('|')[0];
                 estudio.Usuario = db.Usuario.Find(Convert.ToInt32(cod_usu));
                 estudio.Disponivel = false;
@@ -185,17 +195,17 @@ namespace WebApplication1.Controllers
                         valor = Funcoes.UploadArquivo(arquivo, nomearq, estudio.Id);
                         if (valor == "sucesso")
                         {
-                            estudio.Foto = nomearq;
+                            estudio.Foto = "Uploads\\" + estudio.Id + "\\" + nomearq;
                             db.Entry(estudio).State = EntityState.Modified;
                             db.SaveChanges();
-                            TempData["MSG"] = "success|Usuário cadastrado com sucesso";
+                            TempData["MSG"] = "success|Estúdio cadastrado com sucesso";
                             return RedirectToAction("Index");
                         }
                         else
                         {
-                            System.IO.File.Copy(Request.PhysicalApplicationPath + "Uploads\\user.png", Request.PhysicalApplicationPath + "Uploads\\FotoEstudio" + estudio.Id
+                            System.IO.File.Copy(Request.PhysicalApplicationPath + "Uploads\\user.png", Request.PhysicalApplicationPath + "Uploads\\" + estudio.Id + "\\FotoEstudio" + estudio.Id
                             + ".png");
-                            estudio.Foto = "FotoPessoa" + estudio.Id + ".png";
+                            estudio.Foto = "Uploads\\" + estudio.Id + "\\" + nomearq;
                             db.Entry(estudio).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["MSG"] = "warning|Problema no Upload da foto: " + valor;
@@ -204,17 +214,17 @@ namespace WebApplication1.Controllers
                     }
                     else
                     {
-                        System.IO.File.Copy(Request.PhysicalApplicationPath + "Uploads\\user.png", Request.PhysicalApplicationPath +
-                        "Uploads\\FotoEstudio" + estudio.Id + ".png");
-                        estudio.Foto = "FotoPessoa" + estudio.Id + ".png";
+                        System.IO.File.Copy(Request.PhysicalApplicationPath + "Uploads\\user.png", Request.PhysicalApplicationPath + "Uploads\\" + estudio.Id + "\\FotoEstudio" + estudio.Id
+                            + ".png");
+                        estudio.Foto = "Uploads\\" + estudio.Id + "\\" + "FotoEstudio" + estudio.Id + ".png";
                         db.Entry(estudio).State = EntityState.Modified;
                         db.SaveChanges();
-                        TempData["MSG"] = "success|Usuário cadastrado com sucesso";
+                        TempData["MSG"] = "success|Estúdio cadastrado com sucesso";
                         return RedirectToAction("Index");
                     }
                 }
                 db.SaveChanges();
-                TempData["MSG"] = "success|Usuário Cadastrado com Sucesso";
+                TempData["MSG"] = "success|Estúdio cadastrado com sucesso";
                 return RedirectToAction("Index");
             }
             return View(cad);
@@ -224,7 +234,7 @@ namespace WebApplication1.Controllers
         {
             if (id != null)
             {
-                Estudio estudio = db.Estudio.Find(id);
+                Estudio estudio = db.Estudio.Where(p => p.UsuarioId == id).ToList().FirstOrDefault();
                 if (estudio != null)
                 {
                     ViewBag.Estilos = db.Estilos.Where(p => p.Status == true).ToList();
@@ -261,20 +271,20 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Portfolio(int id, int idusu, HttpPostedFileBase[] arquivos)
+        public ActionResult Portfolio(int id, int idusu,/*string descricao*/ HttpPostedFileBase[] arquivos)
         {
             string valor = "";
             if (ModelState.IsValid)
             {
                 Estudio estudio = db.Estudio.Find(id);
-                
+
                 if (arquivos != null)
                 {
                     Funcoes.CriarPortfolio(estudio.Id);
                     int cont = 0;
-                    foreach(var upload in arquivos)
+                    foreach (var upload in arquivos)
                     {
-                        if (db.Portfolio.Where(x=>x.EstudioId==id).ToList().Count < 5)
+                        if (db.Portfolio.Where(x => x.EstudioId == id).ToList().Count < 5)
                         {
                             string extensao = Path.GetExtension(upload.FileName).ToLower();
                             string nomearq = estudio.Id.ToString() + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + extensao;
@@ -284,22 +294,23 @@ namespace WebApplication1.Controllers
                                 Portfolio port = new Portfolio();
                                 port.EstudioId = id;
                                 port.Imagem = nomearq;
+                                //port.Descricao = descricao;
                                 db.Portfolio.Add(port);
                                 db.SaveChanges();
                                 cont++;
                             }
                         }
                     }
-                    
-                    
+
+
                     if (arquivos.Count() > 0)
                     {
-                        
+
                         if (arquivos.Count() == cont)
                         {
                             TempData["MSG"] = "success|Imagens cadastrada com sucesso";
                         }
-                        else if(cont>0)
+                        else if (cont > 0)
                         {
                             TempData["MSG"] = "warning|Algumas imagens não cadastradas";
                         }
